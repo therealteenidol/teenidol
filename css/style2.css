@@ -1,0 +1,532 @@
+/* Importación de fuentes de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Lato:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif; /* Fuente moderna y limpia para el texto principal */
+    background-color: #e9ecef; /* Fondo claro y suave */
+    color: #343a40; /* Texto oscuro para alto contraste */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6; /* Mejor legibilidad */
+    overflow-x: hidden; /* Evita barras de desplazamiento horizontales */
+}
+
+/* Efecto de fondo con degradado sutil para el cuerpo si se desea */
+/* Puedes descomentar esto si quieres un fondo más dinámico
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    z-index: -1;
+}
+*/
+
+h1 {
+    font-family: 'Lato', sans-serif; /* Una fuente complementaria para títulos, más condensada */
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 3.8em; /* Tamaño grande para impactar */
+    color: #212529; /* Casi negro para el título */
+    letter-spacing: -1px; /* Letras un poco más juntas */
+    text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+    margin-bottom: 0; /* Ajuste de margen */
+}
+
+header {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(45deg, #6c757d, #495057); /* Degradado gris oscuro moderno */
+    color: #f8f9fa; /* Texto muy claro */
+    padding: 50px 20px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Sombra profunda */
+    position: relative; /* Para posibles elementos pseudo */
+    overflow: hidden; /* Asegura que el gradiente se vea bien */
+}
+
+/* Efecto de onda o patrón en el header (opcional) */
+header::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; /* Altura de la onda */
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23e9ecef" fill-opacity="1" d="M0,64L48,69.3C96,75,192,85,288,85.3C384,85,480,75,576,64C672,53,768,43,864,42.7C960,43,1056,53,1152,53.3C1248,53,1344,43,1392,37.3L1440,32L1440,100L1392,100C1344,100,1248,100,1152,100C1056,100,960,100,864,100C768,100,672,100,576,100C480,100,384,100,288,100C192,100,96,100,48,100L0,100Z"></path></svg>') no-repeat center bottom;
+    background-size: cover;
+    transform: translateY(100px); /* Ocultar parte para que la onda sobresalga */
+    z-index: 1; /* Asegurar que esté sobre el fondo del header */
+}
+
+
+section {
+    padding: 80px 40px; /* Más padding para airear */
+    background-color: #ffffff; /* Fondo blanco puro para secciones */
+    margin: 30px auto; /* Centrar y separar secciones */
+    max-width: 1200px; /* Ancho máximo para el contenido */
+    border-radius: 15px; /* Bordes redondeados más pronunciados */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Sombra suave y moderna */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+section:hover {
+    transform: translateY(-5px); /* Efecto ligero de elevación al pasar el ratón */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Sombra más intensa al hover */
+}
+
+
+.skills {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px; /* Mayor espacio entre elementos */
+}
+
+.skill {
+    background: linear-gradient(145deg, #f0f2f5, #e0e4e7); /* Degradado suave para las cards */
+    border: none; /* Eliminar el borde antiguo */
+    border-radius: 18px; /* Bordes muy redondeados */
+    padding: 30px;
+    width: 250px; /* Ancho un poco mayor */
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+    transition: all 0.3s ease; /* Transición para todos los cambios */
+    position: relative;
+    overflow: hidden;
+}
+
+.skill::before { /* Efecto de brillo al pasar el ratón */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: skewX(-20deg);
+    transition: all 0.5s ease;
+}
+
+.skill:hover::before {
+    left: 100%;
+}
+
+.skill h3 { /* Estilo para el título de la habilidad */
+    font-family: 'Lato', sans-serif;
+    color: #495057;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.skill p { /* Estilo para la descripción de la habilidad */
+    color: #6c757d;
+    font-size: 0.95em;
+}
+
+
+.visual-novel {
+    background-color: #ffffff;
+    border: none; /* Eliminar el borde para un look más limpio */
+    border-radius: 20px; /* Bordes muy redondeados */
+    padding: 30px;
+    max-width: 950px; /* Un poco más de ancho */
+    height: 580px; /* Ajustar altura */
+    margin: 50px auto; /* Más espacio */
+    cursor: pointer;
+    background-image: url("https://via.placeholder.com/950x580/f8f9fa/343a40?text=Introduce+tu+imagen+de+fondo+aquí"); /* Placeholder. Usa una imagen moderna y de alta calidad */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    position: relative; /* Para posicionamiento interno */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Alinear contenido al final */
+}
+
+/* Puedes añadir un overlay sutil a la imagen para mejorar la legibilidad del texto */
+.visual-novel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 50%); /* Degradado oscuro en la parte inferior */
+    pointer-events: none; /* Permite clicks a través del overlay */
+}
+
+
+.avatar {
+    width: 250px; /* Avatar un poco más grande */
+    height: 250px;
+    position: absolute; /* Posicionamiento absoluto dentro del .visual-novel */
+    bottom: 180px; /* Ajustar para que no se solape con el diálogo */
+    left: 30px; /* Posicionar a la izquierda */
+    background-image: url("https://via.placeholder.com/250x250/6c757d/f8f9fa?text=Avatar"); /* Placeholder. Usa una imagen de avatar moderna */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 10;
+    display: none;
+    border-radius: 50%; /* Avatar redondo */
+    border: 5px solid #ffffff; /* Borde blanco brillante */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35); /* Sombra fuerte para el avatar */
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)); /* Sombra brillante */
+}
+
+#caja-dialogo {
+    background-color: rgba(33, 37, 41, 0.9); /* Fondo semi-transparente oscuro */
+    border: none; /* Eliminar borde */
+    color: #f8f9fa; /* Texto muy claro */
+    border-radius: 15px; /* Bordes redondeados */
+    position: relative; /* Mantener top para ajuste fino, pero la posición es relativa al flujo */
+    bottom: 20px; /* Fija en la parte inferior de .visual-novel */
+    left: 50%;
+    transform: translateX(-50%); /* Centrar horizontalmente */
+    height: 150px; /* Altura ajustada */
+    width: 90%; /* Ancho respecto al contenedor padre */
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+    display: none;
+    margin: 0; /* Eliminar margen auto si ya se centró con transform */
+    z-index: 15; /* Asegurar que esté encima del overlay */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque para el fondo (Moderno!) */
+}
+
+.dialogue {
+    font-size: 1.15em;
+    min-height: 80px;
+    text-align: left;
+    color: #e9ecef; /* Color de texto del diálogo */
+}
+
+.speaker {
+    font-weight: 700; /* Más negrita */
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    padding: 8px 15px;
+    background-color: #007bff; /* Azul brillante para el nombre del hablante */
+    color: #ffffff; /* Texto blanco */
+    width: auto;
+    display: inline-block;
+    border-radius: 8px; /* Bordes redondeados */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+}
+
+/* Transición para ocultar/mostrar elementos con un fade in/out */
+.fade-in {
+    animation: fadeIn 0.8s forwards;
+}
+.fade-out {
+    animation: fadeOut 0.8s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(20px); }
+}
+
+
+#boot-screen {
+    font-family: 'Lato', sans-serif; /* Un estilo moderno pero legible para el boot screen */
+    background: #212529; /* Fondo muy oscuro */
+    color: #e2f0cb; /* Verde pálido muy suave */
+    padding: 6rem 4rem; /* Más padding */
+    height: auto; /* Altura automática para el contenido */
+    min-height: 700px; /* Altura mínima */
+    border-top: 1px solid #495057; /* Borde superior sutil */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+#boot-screen::before { /* Efecto de patrón de código de fondo */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h100v100H0V0z" fill="none"/><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.02)"/></svg>');
+    background-size: 20px 20px; /* Tamaño del patrón */
+    opacity: 0.1; /* Transparencia */
+    z-index: 0;
+}
+
+
+#boot-log {
+    margin: 20px auto;
+    width: 80%; /* Ancho más generoso */
+    max-width: 800px; /* Ancho máximo */
+    line-height: 1.8; /* Mayor interlineado para legibilidad */
+    font-size: 1.1em;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.3); /* Fondo semitransparente para el log */
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra interna para efecto de pantalla */
+    position: relative;
+    z-index: 1;
+}
+
+.titulo2 {
+    color: #007bff; /* Azul brillante para el título de sección */
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#trabajos {
+    background: #f8f9fa; /* Fondo muy claro para esta sección */
+    color: #343a40;
+    font-family: 'Montserrat', sans-serif;
+    padding: 5rem 2rem;
+    text-align: center;
+    border-top: 1px solid #dee2e6; /* Borde suave */
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    background: linear-gradient(45deg, #343a40, #212529); /* Degradado oscuro para el footer */
+    color: #f8f9fa;
+    font-family: 'Montserrat', sans-serif;
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid #495057;
+    box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.25); /* Sombra superior */
+}
+
+.green {
+    color: #28a745; /* Verde de éxito de Bootstrap */
+    font-weight: 600;
+}
+
+.yellow {
+    color: #ffc107; /* Amarillo de advertencia de Bootstrap */
+    font-weight: 600;
+}
+
+.loading {
+    margin-top: 3rem;
+    font-size: 1.3rem;
+    display: none;
+    color: #6c757d; /* Color gris suave */
+    font-weight: 300;
+}
+
+.visual-loading {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa); /* Fondo degradado claro */
+    color: #343a40;
+    font-family: 'Montserrat', sans-serif;
+    padding: 3rem;
+    text-align: center;
+    border: 2px solid #ced4da; /* Borde gris suave */
+    border-radius: 15px;
+    max-width: 800px;
+    margin: 50px auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Sombra moderna */
+}
+
+.progress {
+    background-color: #e9ecef; /* Fondo de la barra de progreso */
+    border: 1px solid #ced4da;
+    height: 30px; /* Mayor altura */
+    width: 100%;
+    margin-top: 2rem;
+    border-radius: 15px; /* Muy redondeado */
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra interna para efecto 3D */
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #007bff, #0056b3); /* Degradado azul para el progreso */
+    height: 100%;
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1); /* Curva de transición suave y elástica */
+    border-radius: 15px 0 0 15px; /* Bordes redondeados en un solo lado */
+}
+
+
+@keyframes blink-effect {
+    50% {
+        opacity: 0;
+    }
+}
+
+.blink {
+    animation: blink-effect 1s step-end infinite;
+}
+
+
+#hacker-button {
+    background: linear-gradient(45deg, #007bff, #0056b3); /* Degradado azul para el botón */
+    color: #ffffff;
+    border: none; /* Sin borde para un look más moderno */
+    padding: 18px 40px;
+    font-size: 1.3em;
+    font-weight: 600; /* Semi-bold */
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3); /* Sombra azul brillante */
+    transition: all 0.4s ease;
+    border-radius: 50px; /* Botón de píldora (muy redondeado) */
+    letter-spacing: 1px;
+    outline: none; /* Eliminar el contorno al enfocar */
+}
+
+#hacker-button:hover {
+    background: linear-gradient(45deg, #0056b3, #007bff); /* Degradado inverso al hover */
+    box-shadow: 0 12px 25px rgba(0, 123, 255, 0.45); /* Sombra más grande al hover */
+    transform: translateY(-3px) scale(1.02); /* Ligeramente levantado y escalado */
+}
+
+#hacker-button:active {
+    transform: translateY(1px); /* Efecto de clic */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* RESPONSIVE DESIGN - MEDIA QUERIES */
+@media (max-width: 992px) {
+    h1 {
+        font-size: 3em;
+        padding: 60px 20px;
+    }
+    section {
+        padding: 60px 20px;
+        margin: 20px auto;
+        border-radius: 10px;
+    }
+    .visual-novel {
+        height: 480px;
+        max-width: 90%;
+        padding: 20px;
+    }
+    .avatar {
+        width: 180px;
+        height: 180px;
+        bottom: 150px;
+        left: 20px;
+    }
+    #caja-dialogo {
+        height: 130px;
+        width: 95%;
+        padding: 20px;
+        font-size: 1em;
+    }
+    .speaker {
+        font-size: 0.9em;
+        padding: 6px 12px;
+    }
+    #boot-log {
+        width: 90%;
+        font-size: 1em;
+    }
+    .titulo2 {
+        font-size: 1.8rem;
+    }
+    #hacker-button {
+        padding: 15px 30px;
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+        padding: 40px 15px;
+    }
+    header {
+        padding: 40px 15px;
+    }
+    section {
+        padding: 40px 15px;
+        margin: 15px auto;
+        border-radius: 8px;
+    }
+    .skills {
+        gap: 20px;
+    }
+    .skill {
+        width: 100%; /* Las habilidades ocupan todo el ancho en móviles */
+        max-width: 300px; /* Ancho máximo para evitar que sean demasiado anchas */
+    }
+    .visual-novel {
+        height: 400px;
+        max-width: 95%;
+        padding: 15px;
+        margin: 30px auto;
+    }
+    .avatar {
+        width: 150px;
+        height: 150px;
+        bottom: 120px;
+        left: 15px;
+        border-width: 3px;
+    }
+    #caja-dialogo {
+        height: 120px;
+        width: 98%;
+        padding: 15px;
+        font-size: 0.9em;
+    }
+    .dialogue {
+        min-height: 60px;
+    }
+    .speaker {
+        font-size: 0.85em;
+        padding: 5px 10px;
+    }
+    #boot-screen {
+        padding: 4rem 1rem;
+        min-height: 500px;
+    }
+    #boot-log {
+        width: 95%;
+        font-size: 0.9em;
+        padding: 15px;
+    }
+    .titulo2 {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    #trabajos, footer {
+        padding: 2.5rem 1rem;
+    }
+    .visual-loading {
+        padding: 2rem;
+        max-width: 95%;
+        margin: 30px auto;
+    }
+    .progress {
+        height: 25px;
+        border-radius: 10px;
+    }
+    .progress-bar {
+        border-radius: 10px 0 0 10px;
+    }
+    #hacker-button {
+        padding: 12px 25px;
+        font-size: 1em;
+        border-radius: 40px;
+    }
+}

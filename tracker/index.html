@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinyl Tracker — Ofertas de vinilos en Amazon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Roboto Mono", monospace;
+      background-color: #0d0d0d;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background-color: #000;
+      border-bottom: 2px solid #00ff00;
+      padding: 40px 20px 30px;
+      text-align: center;
+    }
+    header .logo {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      color: #00ff00;
+      letter-spacing: -1px;
+    }
+    header .logo span { color: #fff; }
+    header p {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #888;
+      letter-spacing: 0.05em;
+    }
+    header .badge {
+      display: inline-block;
+      margin-top: 16px;
+      background: #00ff00;
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Main grid ── */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 50px 20px 60px;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      color: #00ff00;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      border-left: 3px solid #00ff00;
+      padding-left: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    /* ── Product card ── */
+    .card {
+      background: #111;
+      border: 1px solid #222;
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: #00ff00;
+      transform: translateY(-3px);
+    }
+
+    .card-img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      background: #1a1a1a;
+    }
+
+    .card-body {
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .card-artist {
+      font-size: 0.65rem;
+      color: #00ff00;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .card-format {
+      font-size: 0.65rem;
+      color: #555;
+      margin-top: 2px;
+    }
+
+    .card-stars {
+      font-size: 0.75rem;
+      color: #f0a500;
+      margin-top: 4px;
+    }
+    .card-stars span {
+      color: #555;
+      font-size: 0.65rem;
+      margin-left: 4px;
+    }
+
+    .card-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #00ff00;
+      margin-top: auto;
+      padding-top: 12px;
+    }
+
+    .card-btn {
+      display: block;
+      margin-top: 14px;
+      padding: 10px 0;
+      background: #00ff00;
+      color: #000;
+      text-align: center;
+      font-family: "Roboto Mono", monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .card-btn:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* ── New badge ── */
+    .card-new {
+      position: relative;
+    }
+    .card-new::before {
+      content: "NUEVO";
+      position: absolute;
+      top: 10px;
+      left: 0;
+      background: #00ff00;
+      color: #000;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      letter-spacing: 0.1em;
+      z-index: 1;
+    }
+
+    /* ── Offer badge ── */
+    .card-offer {
+      position: relative;
+    }
+    .card-offer::before {
+      content: "-50%";
+      position: absolute;
+      top: 10px;
+      left: 0;
+      background: #ff3c3c;
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      letter-spacing: 0.1em;
+      z-index: 1;
+    }
+    .card-offer-55::before { content: "-55%"; }
+    .card-offer-23::before { content: "-23%"; }
+    .card-offer-33::before { content: "-33%"; }
+    .card-offer-19::before { content: "-19%"; }
+
+    /* ── Old price ── */
+    .card-old-price {
+      font-size: 0.75rem;
+      color: #555;
+      text-decoration: line-through;
+      margin-top: auto;
+      padding-top: 12px;
+    }
+    .card-old-price + .card-price {
+      padding-top: 2px;
+      margin-top: 0;
+    }
+
+    /* ── Section spacing ── */
+    .section-block {
+      margin-top: 60px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #000;
+      border-top: 1px solid #1a1a1a;
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #444;
+      line-height: 1.8;
+    }
+    footer a { color: #555; }
+    footer .disclosure {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">vinyl<span>tracker</span></div>
+    <p>Selección de vinilos recomendados · Disponibles en Amazon España</p>
+    <span class="badge">▶ Compra con envío gratis</span>
+  </header>
+
+  <main>
+    <p class="section-title">// picks de la semana</p>
+
+    <div class="grid">
+
+      <!-- 1. The New Abnormal -->
+      <div class="card">
+        <a href="https://www.amazon.es/New-Abnormal-Vinilo-Strokes/dp/B084G2YBG6?crid=27BGUCYI6DSXM&dib=eyJ2IjoiMSJ9.2t1YwqlhGdnteNttc3OWryg30gWmX9gkOl1NoCHfV4V5uF6LJrlnnj43w0CGqWuqmZlIsxhzH4VJC3X1tNjxoTpU1oaWsOOr3RQvaUzU6aKRqrcJWvhPC1BUkZ_wcQGP93vOC1P_Y716KpitgugmrASsZv-Hp05-N4KuWDPZu-DFqOk6DjSBjEaqzCEIqU4bFQWu7HKyr1l3Pyx6DfmJIg8fHHQMT0dgplNyF52x1Vnk1MQqGPOX8RhwG5BhDs_2AjATAHteaKyhhMXgEei9sBSiqQ7Jrx5C1k1iHvJBq98.HMR2lXVNhvgA5vzl8JrakJlcMksra0RFWZAkS8vnOlE&dib_tag=se&keywords=the+strokes+vinilo&qid=1778744678&sprefix=the+strokes+bini%2Caps%2C91&sr=8-4&linkCode=ll2&tag=lifeisnoise03-21&linkId=afdddf9bd8582725cd03510ef430e3a0&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+          <img class="card-img"
+            src="https://images-eu.ssl-images-amazon.com/images/P/B084G2YBG6.01._SL500_.jpg"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+            alt="The New Abnormal — The Strokes"
+            loading="lazy">
+        </a>
+        <div class="card-body">
+          <span class="card-artist">The Strokes</span>
+          <p class="card-title">The New Abnormal</p>
+          <p class="card-format">LP · 180g · 12" vinyl sleeve-jacket</p>
+          <div class="card-stars">★★★★★<span>4,8 · 5.013 reseñas</span></div>
+          <p class="card-price">23,99 €</p>
+          <a class="card-btn"
+            href="https://www.amazon.es/New-Abnormal-Vinilo-Strokes/dp/B084G2YBG6?crid=27BGUCYI6DSXM&dib=eyJ2IjoiMSJ9.2t1YwqlhGdnteNttc3OWryg30gWmX9gkOl1NoCHfV4V5uF6LJrlnnj43w0CGqWuqmZlIsxhzH4VJC3X1tNjxoTpU1oaWsOOr3RQvaUzU6aKRqrcJWvhPC1BUkZ_wcQGP93vOC1P_Y716KpitgugmrASsZv-Hp05-N4KuWDPZu-DFqOk6DjSBjEaqzCEIqU4bFQWu7HKyr1l3Pyx6DfmJIg8fHHQMT0dgplNyF52x1Vnk1MQqGPOX8RhwG5BhDs_2AjATAHteaKyhhMXgEei9sBSiqQ7Jrx5C1k1iHvJBq98.HMR2lXVNhvgA5vzl8JrakJlcMksra0RFWZAkS8vnOlE&dib_tag=se&keywords=the+strokes+vinilo&qid=1778744678&sprefix=the+strokes+bini%2Caps%2C91&sr=8-4&linkCode=ll2&tag=lifeisnoise03-21&linkId=afdddf9bd8582725cd03510ef430e3a0&ref_=as_li_ss_tl"
+            target="_blank" rel="noopener">Ver en Amazon →</a>
+        </div>
+      </div>
+
+      <!-- 2. First Impressions of Earth -->
+      <div class="card">
+        <a href="https://www.amazon.es/First-Impressions-Earth-Vinilo-Strokes/dp/B08YDDV13H?crid=27BGUCYI6DSXM&dib=eyJ2IjoiMSJ9.2t1YwqlhGdnteNttc3OWryg30gWmX9gkOl1NoCHfV4V5uF6LJrlnnj43w0CGqWuqmZlIsxhzH4VJC3X1tNjxoTpU1oaWsOOr3RQvaUzU6aKRqrcJWvhPC1BUkZ_wcQGP93vOC1P_Y716KpitgugmrASsZv-Hp05-N4KuWDPZu-DFqOk6DjSBjEaqzCEIqU4bFQWu7HKyr1l3Pyx6DfmJIg8fHHQMT0dgplNyF52x1Vnk1MQqGPOX8RhwG5BhDs_2AjATAHteaKyhhMXgEei9sBSiqQ7Jrx5C1k1iHvJBq98.HMR2lXVNhvgA5vzl8JrakJlcMksra0RFWZAkS8vnOlE&dib_tag=se&keywords=the+strokes+vinilo&qid=1778744678&sprefix=the+strokes+bini%2Caps%2C91&sr=8-3&linkCode=ll2&tag=lifeisnoise03-21&linkId=05988c373592250f573e2941cbf08fca&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+          <img class="card-img"
+            src="https://images-eu.ssl-images-amazon.com/images/P/B08YDDV13H.01._SL500_.jpg"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+            alt="First Impressions of Earth — The Strokes"
+            loading="lazy">
+        </a>
+        <div class="card-body">
+          <span class="card-artist">The Strokes</span>
+          <p class="card-title">First Impressions of Earth</p>
+          <p class="card-format">LP · 180g · Importación · 12" sleeve</p>
+          <div class="card-stars">★★★★★<span>4,7 · 1.287 reseñas</span></div>
+          <p class="card-price">23,99 €</p>
+          <a class="card-btn"
+            href="https://www.amazon.es/First-Impressions-Earth-Vinilo-Strokes/dp/B08YDDV13H?crid=27BGUCYI6DSXM&dib=eyJ2IjoiMSJ9.2t1YwqlhGdnteNttc3OWryg30gWmX9gkOl1NoCHfV4V5uF6LJrlnnj43w0CGqWuqmZlIsxhzH4VJC3X1tNjxoTpU1oaWsOOr3RQvaUzU6aKRqrcJWvhPC1BUkZ_wcQGP93vOC1P_Y716KpitgugmrASsZv-Hp05-N4KuWDPZu-DFqOk6DjSBjEaqzCEIqU4bFQWu7HKyr1l3Pyx6DfmJIg8fHHQMT0dgplNyF52x1Vnk1MQqGPOX8RhwG5BhDs_2AjATAHteaKyhhMXgEei9sBSiqQ7Jrx5C1k1iHvJBq98.HMR2lXVNhvgA5vzl8JrakJlcMksra0RFWZAkS8vnOlE&dib_tag=se&keywords=the+strokes+vinilo&qid=1778744678&sprefix=the+strokes+bini%2Caps%2C91&sr=8-3&linkCode=ll2&tag=lifeisnoise03-21&linkId=05988c373592250f573e2941cbf08fca&ref_=as_li_ss_tl"
+            target="_blank" rel="noopener">Ver en Amazon →</a>
+        </div>
+      </div>
+
+      <!-- 3. Comedown Machine -->
+      <div class="card">
+        <a href="https://www.amazon.es/Comedown-Machine-Vinilo-Strokes/dp/B0BV52DY4F?crid=27BGUCYI6DSXM&dib=eyJ2IjoiMSJ9.Gp_ymQN_Nowu2f9_Qh5JzjkeJnriqufnJKBDi0orSDdlNFgl-OyRdihKtTgJqpbCr2adacbgj-aqT07VRF1lhGFuTRyWj78TWib14ESFBRqQ4BLNRVehj1LartcyiiI83waSw90hWwqAHhJAwRgH8QSsZv-Hp05-N4KuWDPZu-DFqOk6DjSBjEaqzCEIqU4bFQWu7HKyr1l3Pyx6DfmJIlaerk9ULiz3LDHi5bNV6bQj-BCt92NfDgTATS-3NiJtdT-gY-ILV0sl2uzJ51aZZYXIbpmco5ZisY60bLZ5raE.wCLatqS2aI11Wap2U-_FfWKMwpdG8qq7JeXLU4FrwRo&dib_tag=se&keywords=the+strokes+vinilo&qid=1778744660&sprefix=the+strokes+bini%2Caps%2C91&sr=8-7&linkCode=ll2&tag=lifeisnoise03-21&linkId=b1f4a55452431039347e79f66e436268&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+          <img class="card-img"
+            src="https://images-eu.ssl-images-amazon.com/images/P/B0BV52DY4F.01._SL500_.jpg"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+            alt="Comedown Machine — The Strokes"
+            loading="lazy">
+        </a>
+        <div class="card-body">
+          <span class="card-artist">The Strokes</span>
+          <p class="card-title">Comedown Machine</p>
+          <p class="card-format">LP · Vinilo de color · 12" sleeve</p>
+          <div class="card-stars">★★★★★<span>4,6 · 92 reseñas</span></div>
+          <p class="card-price">28,99 €</p>
+          <a class="card-btn"
+            href="https://www.amazon.es/Comedown-Machine-Vinilo-Strokes/dp/B0BV52DY4F?crid=27BGUCYI6DSXM&dib=eyJ2IjoiMSJ9.Gp_ymQN_Nowu2f9_Qh5JzjkeJnriqufnJKBDi0orSDdlNFgl-OyRdihKtTgJqpbCr2adacbgj-aqT07VRF1lhGFuTRyWj78TWib14ESFBRqQ4BLNRVehj1LartcyiiI83waSw90hWwqAHhJAwRgH8QSsZv-Hp05-N4KuWDPZu-DFqOk6DjSBjEaqzCEIqU4bFQWu7HKyr1l3Pyx6DfmJIlaerk9ULiz3LDHi5bNV6bQj-BCt92NfDgTATS-3NiJtdT-gY-ILV0sl2uzJ51aZZYXIbpmco5ZisY60bLZ5raE.wCLatqS2aI11Wap2U-_FfWKMwpdG8qq7JeXLU4FrwRo&dib_tag=se&keywords=the+strokes+vinilo&qid=1778744660&sprefix=the+strokes+bini%2Caps%2C91&sr=8-7&linkCode=ll2&tag=lifeisnoise03-21&linkId=b1f4a55452431039347e79f66e436268&ref_=as_li_ss_tl"
+            target="_blank" rel="noopener">Ver en Amazon →</a>
+        </div>
+      </div>
+
+      <!-- 4. Wired - Basement -->
+      <div class="card card-new">
+        <a href="https://www.amazon.es/Wired-Vinilo-Basement/dp/B0GR14W1QB?crid=17KKXMW7YRL0L&dib=eyJ2IjoiMSJ9.8k5StRZ-z0MPNbe-cbkDUzsrTEj3iMb6cL_4lmADLFjQvzoZE1B2NowZVoglend078p1ka5MWS7jitYHVNSSqgrNTTKtLNjafmWFDljs1R_jUEfoJ1WRtlR3DLc1dvqVKVvjz3zqIrkqoWL6p7Z86-fDHyptv76NlKXZ7KhvsG_1LqFXPQoEuzcYvzLo6NMoHm8Ol9if1Qp3F9ur1_I1FH07-u1zeM3K4tA9lVkgdekLOjb3thGdWO5hSwBf7u-je-wBzRHXzZrgibVTIplULWAwHq1HEJyPTbt-Bt1zHGg.xftsNUIXs4RiyPlXR77w6xZTHres2yfDVOKr8YlpYow&dib_tag=se&keywords=basement+vinilo&qid=1778744715&sprefix=basement+vinilo%2Caps%2C85&sr=8-2&linkCode=ll2&tag=lifeisnoise03-21&linkId=dd6d0997688a4189cf3c513e36a55e9e&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+          <img class="card-img"
+            src="https://images-eu.ssl-images-amazon.com/images/P/B0GR14W1QB.01._SL500_.jpg"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+            alt="Wired — Basement"
+            loading="lazy">
+        </a>
+        <div class="card-body">
+          <span class="card-artist">Basement</span>
+          <p class="card-title">Wired</p>
+          <p class="card-format">LP · Vinilo · Run For Cover Records</p>
+          <div class="card-stars">★★★★★<span>5,0 · 1 reseña</span></div>
+          <p class="card-price">25,48 €</p>
+          <a class="card-btn"
+            href="https://www.amazon.es/Wired-Vinilo-Basement/dp/B0GR14W1QB?crid=17KKXMW7YRL0L&dib=eyJ2IjoiMSJ9.8k5StRZ-z0MPNbe-cbkDUzsrTEj3iMb6cL_4lmADLFjQvzoZE1B2NowZVoglend078p1ka5MWS7jitYHVNSSqgrNTTKtLNjafmWFDljs1R_jUEfoJ1WRtlR3DLc1dvqVKVvjz3zqIrkqoWL6p7Z86-fDHyptv76NlKXZ7KhvsG_1LqFXPQoEuzcYvzLo6NMoHm8Ol9if1Qp3F9ur1_I1FH07-u1zeM3K4tA9lVkgdekLOjb3thGdWO5hSwBf7u-je-wBzRHXzZrgibVTIplULWAwHq1HEJyPTbt-Bt1zHGg.xftsNUIXs4RiyPlXR77w6xZTHres2yfDVOKr8YlpYow&dib_tag=se&keywords=basement+vinilo&qid=1778744715&sprefix=basement+vinilo%2Caps%2C85&sr=8-2&linkCode=ll2&tag=lifeisnoise03-21&linkId=dd6d0997688a4189cf3c513e36a55e9e&ref_=as_li_ss_tl"
+            target="_blank" rel="noopener">Ver en Amazon →</a>
+        </div>
+      </div>
+
+      <!-- 5. Unself - Conjurer -->
+      <div class="card card-new">
+        <a href="https://www.amazon.es/Unself-Edici%C3%B3n-Color-Transparente-Lp-Vinilo/dp/B0FLX2R9QC?&linkCode=ll2&tag=lifeisnoise03-21&linkId=384f3adf12fd516254d0a20233175ab9&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+          <img class="card-img"
+            src="https://images-eu.ssl-images-amazon.com/images/P/B0FLX2R9QC.01._SL500_.jpg"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+            alt="Unself — Conjurer"
+            loading="lazy">
+        </a>
+        <div class="card-body">
+          <span class="card-artist">Conjurer</span>
+          <p class="card-title">Unself</p>
+          <p class="card-format">LP · Edición Color Transparente · Importación</p>
+          <div class="card-stars">★★★★★<span>4,8 · 5 reseñas</span></div>
+          <p class="card-price">27,99 €</p>
+          <a class="card-btn"
+            href="https://www.amazon.es/Unself-Edici%C3%B3n-Color-Transparente-Lp-Vinilo/dp/B0FLX2R9QC?&linkCode=ll2&tag=lifeisnoise03-21&linkId=384f3adf12fd516254d0a20233175ab9&ref_=as_li_ss_tl"
+            target="_blank" rel="noopener">Ver en Amazon →</a>
+        </div>
+      </div>
+
+      <!-- 6. Embrace - Embrace -->
+      <div class="card">
+        <a href="https://www.amazon.es/Embrace-Vinilo/dp/B004OOJPFE?crid=FYPAJRKE7VC5&dib=eyJ2IjoiMSJ9.EyftP2TYo7MQVp8NCS_8-c3d8yFkBlv2ws4eYQWAWm4MZPYz8NXnKS5Un6FRmq25CuSl1J_5etEYTDrSxKDkTZh97wO0YhNJsD99VPC1SQLiQ56LghopQ_aLsrOOvCUjGqTWNqlvgVd_XccEaZTRQWt7vlE9WnjJOM_12aWmHSknqnHRku0UzRYfuFgAD5cGgoXZWsfTKTYnIqgc553ULnbtRxYdTqu-sa2r4tdX_1tWvS0mtyhApRGFC6FlaYZ-5IINx8jl9WfyExpZnzLmZtmFL_sAWhGH7mi4F0D_tSM.6Iapn5a_Kh9TNBbAuoawbOF-Jz6W4Od0V9uCStqTF5w&dib_tag=se&keywords=embrace+vinilo&qid=1778745084&sprefix=embrace+vinilo%2Caps%2C110&sr=8-6&linkCode=ll2&tag=lifeisnoise03-21&linkId=1880ed9a2df41652d9b571bde5325c95&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+          <img class="card-img"
+            src="https://images-eu.ssl-images-amazon.com/images/P/B004OOJPFE.01._SL500_.jpg"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+            alt="Embrace — Embrace"
+            loading="lazy">
+        </a>
+        <div class="card-body">
+          <span class="card-artist">Embrace</span>
+          <p class="card-title">Embrace</p>
+          <p class="card-format">LP · Importación · Dischord Records</p>
+          <div class="card-stars">★★★★★<span>4,7 · 12 reseñas</span></div>
+          <p class="card-price">29,74 €</p>
+          <a class="card-btn"
+            href="https://www.amazon.es/Embrace-Vinilo/dp/B004OOJPFE?crid=FYPAJRKE7VC5&dib=eyJ2IjoiMSJ9.EyftP2TYo7MQVp8NCS_8-c3d8yFkBlv2ws4eYQWAWm4MZPYz8NXnKS5Un6FRmq25CuSl1J_5etEYTDrSxKDkTZh97wO0YhNJsD99VPC1SQLiQ56LghopQ_aLsrOOvCUjGqTWNqlvgVd_XccEaZTRQWt7vlE9WnjJOM_12aWmHSknqnHRku0UzRYfuFgAD5cGgoXZWsfTKTYnIqgc553ULnbtRxYdTqu-sa2r4tdX_1tWvS0mtyhApRGFC6FlaYZ-5IINx8jl9WfyExpZnzLmZtmFL_sAWhGH7mi4F0D_tSM.6Iapn5a_Kh9TNBbAuoawbOF-Jz6W4Od0V9uCStqTF5w&dib_tag=se&keywords=embrace+vinilo&qid=1778745084&sprefix=embrace+vinilo%2Caps%2C110&sr=8-6&linkCode=ll2&tag=lifeisnoise03-21&linkId=1880ed9a2df41652d9b571bde5325c95&ref_=as_li_ss_tl"
+            target="_blank" rel="noopener">Ver en Amazon →</a>
+        </div>
+      </div>
+
+
+      <!-- 7. Youth - Citizen -->
+      <div class="card card-new">
+        <a href="https://www.amazon.es/Youth-10Th-Anniversary-Vinyle-Orange/dp/B0DMKS5SMK?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=265KAWYJS79S7&dib=eyJ2IjoiMSJ9.D9X_l2o6H7EyhoOr-GA_YQ.xn5xpNX-XtwQXQPcQPx9rmW39iQF_02tSOA4GYQeX0Y&dib_tag=se&keywords=citizen+youth+vinilo&qid=1782062391&sprefix=citizen+youth+vinilo%2Caps%2C77&sr=8-1&linkCode=ll2&tag=lifeisnoise03-21&linkId=00c79d52a5eaa717a868ace77ab13202&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+          <img class="card-img"
+            src="https://images-eu.ssl-images-amazon.com/images/P/B0DMKS5SMK.01._SL500_.jpg"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+            alt="Youth — Citizen"
+            loading="lazy">
+        </a>
+        <div class="card-body">
+          <span class="card-artist">Citizen</span>
+          <p class="card-title">Youth <small style="font-weight:400;font-size:0.75rem;color:#888;">10th Anniversary</small></p>
+          <p class="card-format">LP · Vinilo naranja · Run For Cover Records</p>
+          <div class="card-stars">★★★★★<span>4,8 · 256 reseñas</span></div>
+          <p class="card-price">25,20 €</p>
+          <a class="card-btn"
+            href="https://www.amazon.es/Youth-10Th-Anniversary-Vinyle-Orange/dp/B0DMKS5SMK?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=265KAWYJS79S7&dib=eyJ2IjoiMSJ9.D9X_l2o6H7EyhoOr-GA_YQ.xn5xpNX-XtwQXQPcQPx9rmW39iQF_02tSOA4GYQeX0Y&dib_tag=se&keywords=citizen+youth+vinilo&qid=1782062391&sprefix=citizen+youth+vinilo%2Caps%2C77&sr=8-1&linkCode=ll2&tag=lifeisnoise03-21&linkId=00c79d52a5eaa717a868ace77ab13202&ref_=as_li_ss_tl"
+            target="_blank" rel="noopener">Ver en Amazon →</a>
+        </div>
+      </div>
+
+    </div><!-- /.grid -->
+
+    <!-- ═══ SECCIÓN: MODA & DEPORTE ═══ -->
+    <div class="section-block">
+      <p class="section-title">// otras ofertas</p>
+
+      <div class="grid">
+
+        <!-- Bolígrafo Tela Borrable con Calor — AOYUDJ -->
+        <div class="card">
+          <a href="https://www.amazon.es/dp/B0DW939QJ2?linkCode=ll2&tag=lifeisnoise03-21&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/51NaDC0wGwL._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Bolígrafo de Tela Borrable con Calor — AOYUDJ"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">AOYUDJ</span>
+            <p class="card-title">Bolígrafo Tela Borrable con Calor</p>
+            <p class="card-format">1 bolígrafo + 10 recambios · 4 colores · Costura / Cuero</p>
+            <div class="card-stars">★★★★☆<span>4,0 · 3 reseñas</span></div>
+            <p class="card-price">3,99 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B0DW939QJ2?linkCode=ll2&tag=lifeisnoise03-21&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Neutrogena Hydro Boost Fluido Hidratante SPF 50 -->
+        <div class="card card-offer card-offer-55">
+          <a href="https://www.amazon.es/dp/B0D9NL89YN?social_share=cm_sw_r_cso_wa_apan_dp_A562FBFA2ZNR2HHJ8MBS&linkCode=ll2&tag=lifeisnoise03-21&linkId=22236968211aa7b49aa027abaa0f0dee&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://images-eu.ssl-images-amazon.com/images/P/B0D9NL89YN.01._SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Neutrogena Hydro Boost Fluido Hidratante SPF 50"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">Neutrogena</span>
+            <p class="card-title">Hydro Boost Fluido SPF 50</p>
+            <p class="card-format">Cuidado facial · 50 ml · Ác. Hialurónico + Niacinamida</p>
+            <div class="card-stars">★★★★½<span>4,5 · 716 reseñas</span></div>
+            <p class="card-old-price">23,50 €</p>
+            <p class="card-price">10,69 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B0D9NL89YN?social_share=cm_sw_r_cso_wa_apan_dp_A562FBFA2ZNR2HHJ8MBS&linkCode=ll2&tag=lifeisnoise03-21&linkId=22236968211aa7b49aa027abaa0f0dee&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Pilas AAA Recargables Amazon Basics — B07NWWLLMQ -->
+        <div class="card">
+          <a href="https://www.amazon.es/dp/B07NWWLLMQ?linkCode=ll2&tag=lifeisnoise03-21&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/81HOj3NRHgL._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect width=%22200%22 height=%22200%22 fill=%22%23eee%22/%3E%3C/svg%3E'"
+              alt="Amazon Basics Pilas AAA Recargables, paquete de 16"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">Amazon Basics</span>
+            <p class="card-title">Pilas AAA Recargables — Pack de 16</p>
+            <p class="card-format">800 mAh · NiMH · 1,2 V · Precargadas · Hasta 1000 recargas</p>
+            <div class="card-stars">★★★★★<span>4,5 · 221.257 reseñas</span></div>
+            <p class="card-price">13,86 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B07NWWLLMQ?linkCode=ll2&tag=lifeisnoise03-21&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Simon Interruptor Conmutador Doble — B0BWNK2DFV -->
+        <div class="card card-offer card-offer-23">
+          <a href="https://www.amazon.es/SIMON-Interruptor-Conmutador-Interior-Mecanismo/dp/B0BWNK2DFV?&linkCode=ll2&tag=lifeisnoise03-21&linkId=61c4f0cee7b706304710eca49a61618d&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://images-eu.ssl-images-amazon.com/images/P/B0BWNK2DFV.01._SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="SIMON Interruptor Conmutador Doble, Serie Simon 10"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">Simon</span>
+            <p class="card-title">Interruptor Conmutador Doble</p>
+            <p class="card-format">Serie Simon 10 · 230V · IP20 · Marco + Tapa + Mecanismo</p>
+            <div class="card-stars">★★★★☆<span>4,0 · 185 reseñas</span></div>
+            <p class="card-old-price">9,44 €</p>
+            <p class="card-price">7,29 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/SIMON-Interruptor-Conmutador-Interior-Mecanismo/dp/B0BWNK2DFV?&linkCode=ll2&tag=lifeisnoise03-21&linkId=61c4f0cee7b706304710eca49a61618d&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Multicentrum Mujer Multivitaminas — B00GY2JCXE -->
+        <div class="card card-offer card-offer-33">
+          <a href="https://www.amazon.es/dp/B00GY2JCXE?social_share=cm_sw_r_cso_wa_apan_dp_35J3VH02568XNXBCWGQS&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=0897ec1acbe0c31474b5b53a3503f50a&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/71QGHbz0B5L._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Multicentrum Mujer Multivitaminas 30 comprimidos"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">Multicentrum</span>
+            <p class="card-title">Mujer Multivitaminas</p>
+            <p class="card-format">30 comprimidos · 13 vitaminas · 11 minerales · Sin gluten</p>
+            <div class="card-stars">★★★★★<span>4,6 · 3.027 reseñas</span></div>
+            <p class="card-old-price">13,98 €</p>
+            <p class="card-price">9,35 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B00GY2JCXE?social_share=cm_sw_r_cso_wa_apan_dp_35J3VH02568XNXBCWGQS&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=0897ec1acbe0c31474b5b53a3503f50a&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Audio-Technica AT-VM95C/H + AT-HS10 Headshell — B07JLXZ58X -->
+        <div class="card">
+          <a href="https://www.amazon.es/dp/B07JLXZ58X?linkCode=ll2&tag=lifeisnoise03-21&linkId=52beefe7c8f50ebbc444a47c08bec689&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/61aq400tbiL._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect width=%22200%22 height=%22200%22 fill=%22%23eee%22/%3E%3C/svg%3E'"
+              alt="Audio-Technica AT-VM95C/H Cápsula Moving Magnet + AT-HS10 Headshell"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">Audio-Technica</span>
+            <p class="card-title">AT-VM95C/H + AT-HS10 Headshell</p>
+            <p class="card-format">Cápsula Moving Magnet · Aguja cónica · Montura half-inch</p>
+            <div class="card-stars">★★★★★<span>4,6 · 708 reseñas</span></div>
+            <p class="card-price">66,64 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B07JLXZ58X?linkCode=ll2&tag=lifeisnoise03-21&linkId=52beefe7c8f50ebbc444a47c08bec689&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- NIVEA Q10 Loción Corporal Reafirmante 250 ml — B0DJ9JM5MJ -->
+        <div class="card card-new">
+          <a href="https://www.amazon.es/dp/B0DJ9JM5MJ?social_share=cm_sw_r_cso_wa_apan_dp_WFABNZ408F5BH2MTNRAS&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=beb98fea8a4997c41c0fc04ff733a064&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://images-eu.ssl-images-amazon.com/images/P/B0DJ9JM5MJ.01._SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="NIVEA Q10 Loción Corporal Reafirmante 250 ml"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">NIVEA</span>
+            <p class="card-title">Q10 Loción Corporal Reafirmante</p>
+            <p class="card-format">250 ml · Q10 + Vitamina C + Collagen Boost · Piel normal</p>
+            <div class="card-stars">★★★★½<span>4,6 · 1.030 reseñas</span></div>
+            <p class="card-old-price">4,50 €</p>
+            <p class="card-price">4,24 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B0DJ9JM5MJ?social_share=cm_sw_r_cso_wa_apan_dp_WFABNZ408F5BH2MTNRAS&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=beb98fea8a4997c41c0fc04ff733a064&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Zapatillas de Lona Clásicas Inglesita — SIM TACT B0GTN2YLK7 -->
+        <div class="card card-new">
+          <a href="https://www.amazon.es/dp/B0GTN2YLK7?th=1&psc=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=ad5006ea39b62b1bd12cf68dc543d4cc&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/61yrcgVLgyL._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Zapatillas de Lona Clásicas Inglesita — SIM TACT"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">SIM TACT</span>
+            <p class="card-title">Zapatillas de Lona Clásicas Inglesita</p>
+            <p class="card-format">Plana · Suela antideslizante · Lona transpirable · Varios colores</p>
+            <div class="card-stars">☆☆☆☆☆<span>Sin reseñas aún</span></div>
+            <p class="card-price">11,95 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B0GTN2YLK7?th=1&psc=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=ad5006ea39b62b1bd12cf68dc543d4cc&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+      </div><!-- /.grid -->
+    </div><!-- /.section-block -->
+
+    <!-- ═══ SECCIÓN: GUITARRA & GEAR ═══ -->
+    <div class="section-block">
+      <p class="section-title">// guitarra &amp; gear</p>
+
+      <div class="grid">
+
+        <!-- Donner Pedalera DB-S100 — B093GWVQBT -->
+        <div class="card">
+          <a href="https://www.amazon.es/Donner-Pedalera-Guitarra-Pedalboard-Transporte/dp/B093GWVQBT?th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=a5ce3489fea78487e6b380f84ff748b2&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/715yhb7jBLL._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Donner Pedalera DB-S100"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">Donner</span>
+            <p class="card-title">Pedalboard DB-S100 con Bolsa</p>
+            <p class="card-format">36,7×19,1×5,2 cm · Aluminio · Bolsa mochila + Velcro + 3 cables</p>
+            <div class="card-stars">★★★★½<span>4,5 · 862 reseñas</span></div>
+            <p class="card-price">47,99 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/Donner-Pedalera-Guitarra-Pedalboard-Transporte/dp/B093GWVQBT?th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=a5ce3489fea78487e6b380f84ff748b2&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- M-VAVE Chocolate BT — B0DJX9X2HS -->
+        <div class="card">
+          <a href="https://www.amazon.es/VOANZO-Controlador-inal%C3%A1mbrico-Recargable-aplicaci%C3%B3n/dp/B0DJX9X2HS?linkCode=ll2&tag=lifeisnoise03-21&linkId=0ccda1e657af2ccfabd2b822a66d2c35&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/41YvPTCrFQL._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="M-VAVE Chocolate BT Controlador MIDI"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">VOANZO / M-VAVE</span>
+            <p class="card-title">Chocolate BT Controlador MIDI Inalámbrico</p>
+            <p class="card-format">4 botones · Bluetooth · Recargable · App control · USB-C</p>
+            <div class="card-stars">★★★★½<span>4,4 · 33 reseñas</span></div>
+            <p class="card-price">39,99 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/VOANZO-Controlador-inal%C3%A1mbrico-Recargable-aplicaci%C3%B3n/dp/B0DJX9X2HS?linkCode=ll2&tag=lifeisnoise03-21&linkId=0ccda1e657af2ccfabd2b822a66d2c35&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+      </div><!-- /.grid -->
+    </div><!-- /.section-block -->
+
+    <!-- ═══ SECCIÓN: HOME ═══ -->
+    <div class="section-block">
+      <p class="section-title">// home</p>
+
+      <div class="grid">
+
+        <!-- Set Bistró T-LOVENDO — B0DG8ZBXDX -->
+        <div class="card card-offer card-offer-19">
+          <a href="https://www.amazon.es/dp/B0DG8ZBXDX?social_share=cm_sw_r_cso_wa_apan_dp_ss_82B9VN0S9N7PSD37BWC8&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=91f7f0a7eaa8f2920ce642049034ccd3&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/51g5ag-3CsL._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Set Bistró 3 Piezas Mesa y 2 Sillas — T-LOVENDO"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">T-LOVENDO.ES</span>
+            <p class="card-title">Set Bistró 3 Piezas (Mesa + 2 Sillas)</p>
+            <p class="card-format">Jardín · Plegable · Metal y Madera · Terraza / Balcón</p>
+            <div class="card-stars">★★★★☆<span>3,9 · 119 reseñas</span></div>
+            <p class="card-old-price">69,99 €</p>
+            <p class="card-price">56,99 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B0DG8ZBXDX?social_share=cm_sw_r_cso_wa_apan_dp_ss_82B9VN0S9N7PSD37BWC8&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=91f7f0a7eaa8f2920ce642049034ccd3&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Sofá Cama Vipbear 200 cm — B0GY14HC73 -->
+        <div class="card card-new">
+          <a href="https://www.amazon.es/dp/B0GY14HC73?social_share=cm_sw_r_cso_wa_apan_dp_VP5G0V8886SR7ZA2335N&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=9bbb6efaff18abc54a614f25c2e89573&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/91XgU4rkL2L._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Sofá Cama Pana 200×100×70 cm — Vipbear"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">Vipbear</span>
+            <p class="card-title">Sofá Cama Pana 200×100×70 cm</p>
+            <p class="card-format">Sofá de suelo 5 en 1 · Espuma alta densidad · Sin montaje</p>
+            <div class="card-stars">★★★★★<span>5,0 · 4 reseñas</span></div>
+            <p class="card-price">349,90 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B0GY14HC73?social_share=cm_sw_r_cso_wa_apan_dp_VP5G0V8886SR7ZA2335N&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=9bbb6efaff18abc54a614f25c2e89573&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Sofá Cama Vipbear 160 cm — B0GY2QK1PH -->
+        <div class="card card-new">
+          <a href="https://www.amazon.es/dp/B0GY2QK1PH?social_share=cm_sw_r_cso_wa_apan_dp_VP5G0V8886SR7ZA2335N_1&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=de80711bf7cac8f7c1416b38525245a1&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/91XgU4rkL2L._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Sofá Cama Pana 160×90×70 cm — Vipbear"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">Vipbear</span>
+            <p class="card-title">Sofá Cama Pana 160×90×70 cm</p>
+            <p class="card-format">Sofá de suelo 5 en 1 · Espuma alta densidad · Sin montaje</p>
+            <div class="card-stars">★★★★★<span>5,0 · 4 reseñas</span></div>
+            <p class="card-price">309,90 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B0GY2QK1PH?social_share=cm_sw_r_cso_wa_apan_dp_VP5G0V8886SR7ZA2335N_1&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=de80711bf7cac8f7c1416b38525245a1&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        
+         <!-- Banco Zapatero VASAGLE — B0BYZ3R54M -->
+        <div class="card">
+          <a href="https://www.amazon.es/CAHAYA-el%C3%A9ctrico-el%C3%A9ctrica-Concierto-Acolchada/dp/B085ZYJDY5?crid=35HSS630KXD91&dd=hHVpjbN4n0Fj_mD4gE0O0Q%2C%2C&dib=eyJ2IjoiMSJ9.Z8BH-aMZdEs8l9en9Rjy3EMhRCsFtx_sPyAjeoUiJOJ1Y7me7kXF9xqboVJptDDiyY0mb9qz207aaN7PRABZhENeIqlB2jlVEoyLy9s3c_REJsQKPHWxf0kNjpn4SDCF3v4exD09ehNa8QlioMIBoU5jRGQ3GsgTfEQvUycXFkNGc0oHABnhuySi9b61nhukt-XWZgcKiBdqfReFHSFcKcE9TC7XyabdEuJjSsrjVi2A1RVyQBm35teqkqHKD-0zy8oRGNfz-QXqpEyDkN-Nq2BDP0y3u7DDVxdzfDm851k.ca0XmNOTN8StewrgxPYhVWEhnmLuaJkRsCzRCqg57XA&dib_tag=se&keywords=funda%2Bbajo%2Belectrico%2Bacolchada&qid=1781031658&refinements=p_90%3A6820340031&rnid=6820335031&sprefix=funda%2Bbajo%2Bele%2Caps%2C108&sr=8-6&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=e1921efc512616806d34a78c5ef738e7&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/61NtW7kP1uL._AC_SX522_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Funda de bajo eléctrico — CAHAYA"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">CAHAYA</span>
+            <p class="card-title">Funda de bajo eléctrico</p>
+            <p class="card-format">diseñado para bajo eléctrico de 43 pulgadas</p>
+            <div class="card-stars">★★★★★<span>4,4 · 3.021 reseñas</span></div>
+            <p class="card-price">29,99 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/CAHAYA-el%C3%A9ctrico-el%C3%A9ctrica-Concierto-Acolchada/dp/B085ZYJDY5?crid=35HSS630KXD91&dd=hHVpjbN4n0Fj_mD4gE0O0Q%2C%2C&dib=eyJ2IjoiMSJ9.Z8BH-aMZdEs8l9en9Rjy3EMhRCsFtx_sPyAjeoUiJOJ1Y7me7kXF9xqboVJptDDiyY0mb9qz207aaN7PRABZhENeIqlB2jlVEoyLy9s3c_REJsQKPHWxf0kNjpn4SDCF3v4exD09ehNa8QlioMIBoU5jRGQ3GsgTfEQvUycXFkNGc0oHABnhuySi9b61nhukt-XWZgcKiBdqfReFHSFcKcE9TC7XyabdEuJjSsrjVi2A1RVyQBm35teqkqHKD-0zy8oRGNfz-QXqpEyDkN-Nq2BDP0y3u7DDVxdzfDm851k.ca0XmNOTN8StewrgxPYhVWEhnmLuaJkRsCzRCqg57XA&dib_tag=se&keywords=funda%2Bbajo%2Belectrico%2Bacolchada&qid=1781031658&refinements=p_90%3A6820340031&rnid=6820335031&sprefix=funda%2Bbajo%2Bele%2Caps%2C108&sr=8-6&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=e1921efc512616806d34a78c5ef738e7&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Fischer 552152 Masilla Rellenadora — B087CD7STH -->
+        <div class="card">
+          <a href="https://www.amazon.es/dp/B087CD7STH?th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=d02bb8bd474b8ab5bcbd5ccc8ce87695&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/513oeuSpY2L._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Fischer 552152 - Masilla rellenadora en tubo con espátula integrada"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">fischer</span>
+            <p class="card-title">Masilla Rellenadora en Tubo con Espátula</p>
+            <p class="card-format">70 ml · Blanco · Interior y exterior · Listo para usar</p>
+            <div class="card-stars">★★★★½<span>4,5 · 5.209 reseñas</span></div>
+            <p class="card-price">8,00 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B087CD7STH?th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=d02bb8bd474b8ab5bcbd5ccc8ce87695&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- Banco Zapatero VASAGLE — B0BYZ3R54M -->
+        <div class="card">
+          <a href="https://www.amazon.es/dp/B0BYZ3R54M?social_share=cm_sw_r_cso_wa_apan_dp_0E3RD9N2BAGD0W7HEWNF&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=700dbd61a6d1b1b68638fe63c9fe47ee&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/71It-6LrTkL._AC_SL500_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Banco Zapatero 2 Estantes 30×73×45 cm — VASAGLE"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">VASAGLE</span>
+            <p class="card-title">Banco Zapatero 2 Estantes — 30×73×45 cm</p>
+            <p class="card-format">Pasillo / Sala · Acero + Madera · Estilo Industrial · Beige Roble</p>
+            <div class="card-stars">★★★★★<span>4,8 · 1.698 reseñas</span></div>
+            <p class="card-price">39,99 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B0BYZ3R54M?social_share=cm_sw_r_cso_wa_apan_dp_0E3RD9N2BAGD0W7HEWNF&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=700dbd61a6d1b1b68638fe63c9fe47ee&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+        <!-- COMIDA TGATOS -->
+        <div class="card">
+          <a href="https://www.amazon.es/dp/B09L63HS92?social_share=cm_sw_r_cso_wa_apan_dp_0E3RD9N2BAGD0W7HEWNF&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=700dbd61a6d1b1b68638fe63c9fe47ee&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+            <img class="card-img"
+              src="https://m.media-amazon.com/images/I/81pi0FGwSPL._AC_SY450_.jpg"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'220\' height=\'220\'%3E%3Crect fill=\'%231a1a1a\' width=\'220\' height=\'220\'/%3E%3C/svg%3E'"
+              alt="Comida para Gatos — 1,5 kg — PURINA"
+              loading="lazy">
+          </a>
+          <div class="card-body">
+            <span class="card-artist">PURINA</span>
+            <p class="card-title">Comida para Gatos — 1,5 kg</p>
+            <p class="card-format">Alimento Seco · Sabor Pollo · Para Adultos</p>
+            <div class="card-stars">★★★★☆<span>4,5 · 1.234 reseñas</span></div>
+            <p class="card-price">13,95 €</p>
+            <a class="card-btn"
+              href="https://www.amazon.es/dp/B09L63HS92?social_share=cm_sw_r_cso_wa_apan_dp_0E3RD9N2BAGD0W7HEWNF&th=1&linkCode=ll2&tag=lifeisnoise03-21&linkId=700dbd61a6d1b1b68638fe63c9fe47ee&ref_=as_li_ss_tl"
+              target="_blank" rel="noopener">Ver en Amazon →</a>
+          </div>
+        </div>
+
+      </div><!-- /.grid -->
+    </div><!-- /.section-block -->
+
+    <!-- ═══ SECCIÓN: LIBROS ═══ -->
+    <div class="section-block">
+      <p class="section-title">// libros</p>
+
+      <div class="grid">
+
+       
+
+      </div><!-- /.grid -->
+    </div><!-- /.section-block -->
+
+  </main>
+
+  <footer>
+    <p class="disclosure">
+      Como Afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.<br>
+      Los precios y la disponibilidad pueden variar. Comprueba el precio actual en Amazon antes de comprar.<br><br>
+      &copy; 2026 Vinyl Tracker &mdash; <a href="https://afiliados.amazon.es/" target="_blank" rel="noopener">Programa de Afiliados Amazon</a>
+    </p>
+  </footer>
+
+</body>
+</html>

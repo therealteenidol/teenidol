@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupis Walk</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas" width="640" height="360"></canvas>
+
+        <div id="ui-layer">
+            <div id="score">SCORE: <span id="score-value">0</span></div>
+        </div>
+
+        <div id="start-screen" class="overlay">
+            <h1>LUPIS WALK</h1>
+            <p>Protect the Dog!</p>
+            <p class="blink">PRESS SPACE TO START</p>
+            <div class="controls">
+                <p>ARROWS/WASD: Move</p>
+                <p>SPACE: Throw Dog</p>
+                <p>Z/CLICK: Shoot (While Dog is Airborn)</p>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="overlay" style="display: none;">
+            <h1>GAME OVER</h1>
+            <p>SCORE: <span id="final-score">0</span></p>
+            <p class="blink">PRESS F5 TO RESTART</p>
+        </div>
+    </div>
+    <script src="js/InputHandler.js"></script>
+    <script src="js/Renderer.js"></script>
+    <script src="js/Dog.js"></script>
+    <script src="js/Player.js"></script>
+    <script src="js/EnemyManager.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>

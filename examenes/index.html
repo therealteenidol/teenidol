@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)https://jfcode.es/test-opo-tai/ -->
+<html lang="es" data-theme="light"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preparador TAI - Oposiciones AGE</title>
+    <link rel="stylesheet" href="./Preparador TAI - Oposiciones AGE_files/styles.css">
+<!-- Google tag (gtag.js) --> <script async="" src="./Preparador TAI - Oposiciones AGE_files/js"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-2FJJ14QZWZ'); </script>
+
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <div class="brand-icon">⚡</div>
+                <div class="brand-text">
+                    <h2>Preparador TAI</h2>
+                    <span>Oposiciones AGE</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-btn" data-view="inicio">
+                    <span class="icon">🏠</span> <span class="label">Inicio</span>
+                </button>
+                <button class="nav-btn" data-view="nuevo-test">
+                    <span class="icon">📝</span> <span class="label">Nuevo Test</span>
+                </button>
+                <button class="nav-btn" data-view="simulacro">
+                    <span class="icon">⏱️</span> <span class="label">Simulacro TAI</span>
+                </button>
+                <button class="nav-btn" data-view="falladas">
+                    <span class="icon">❌</span> <span class="label">Preguntas Falladas</span>
+                </button>
+                <button class="nav-btn" data-view="estadisticas">
+                    <span class="icon">📊</span> <span class="label">Estadísticas</span>
+                </button>
+                <button class="nav-btn" data-view="historial">
+                    <span class="icon">📜</span> <span class="label">Historial</span>
+                </button>
+                <button class="nav-btn" data-view="informacion">
+                    <span class="icon">ℹ️</span> <span class="label">Info Examen</span>
+                </button>
+                <button class="nav-btn" data-view="configuracion">
+                    <span class="icon">⚙️</span> <span class="label">Configuración</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div id="api-status-badge" class="badge badge-success">API Configurada</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="top-bar">
+                <button id="mobile-menu-toggle" class="btn-icon">☰</button>
+                <h1 id="view-title">Dashboard</h1>
+                <div class="user-actions">
+                    <button id="theme-toggle" class="btn-icon" title="Cambiar Tema">🌙</button>
+                </div>
+            </header>
+
+            <div class="container" id="content-area">
+                <!-- VISTA INICIO -->
+                <section id="view-inicio" class="view-section">
+                    <div class="hero-card">
+                        <div class="hero-text">
+                            <h2>Preparación Inteligente TAI</h2>
+                            <p>Genera tests y simulacros adaptados al temario oficial de Técnico Auxiliar de Informática mediante Inteligencia Artificial.</p>
+                            <hr/>
+                            <p>Temario actualizado 2026</p>
+                            <div class="hero-actions">
+                                <button class="btn btn-primary" data-action="nav" data-target="nuevo-test">Iniciar Test</button>
+                                <button class="btn btn-secondary" data-action="nav" data-target="simulacro">Simulacro Oficial</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="syllabus-update-banner" aria-label="Actualización del temario">
+                        <span class="syllabus-update-icon" aria-hidden="true">✓</span>
+                        <div>
+                            <strong>Temario revisado para la preparación en 2026</strong>
+                            <p>Basado en la convocatoria de ingreso libre TAI publicada en el BOE el 22 de diciembre de 2025 (<a href="https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-26262" target="_blank" rel="noopener">BOE-A-2025-26262</a>), cuyo proceso se desarrolla en 2026. La próxima convocatoria puede introducir cambios.</p>
+                        </div>
+                    </aside>
+
+                    <div class="section-title">
+                        <h3>Tu Progreso Global</h3>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon icon-blue">📋</div>
+                            <div class="stat-data">
+                                <span class="stat-value" id="dash-tests-realizados">7</span>
+                                <span class="stat-label">Tests Realizados</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon icon-purple">❓</div>
+                            <div class="stat-data">
+                                <span class="stat-value" id="dash-preguntas-totales">130</span>
+                                <span class="stat-label">Preguntas Respondidas</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon icon-green">✓</div>
+                            <div class="stat-data">
+                                <span class="stat-value" id="dash-aciertos">85</span>
+                                <span class="stat-label">Aciertos Totales</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon icon-red">✗</div>
+                            <div class="stat-data">
+                                <span class="stat-value" id="dash-fallos">45</span>
+                                <span class="stat-label">Fallos Totales</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon icon-yellow">🎯</div>
+                            <div class="stat-data">
+                                <span class="stat-value" id="dash-porcentaje">65.4%</span>
+                                <span class="stat-label">% de Aciertos</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon icon-orange">⭐</div>
+                            <div class="stat-data">
+                                <span class="stat-value" id="dash-nota-media">5.1</span>
+                                <span class="stat-label">Nota Media</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="dash-empty-notice" class="notice-card hidden">
+                        <p>Todavía no tienes estadísticas. Realiza tu primer test para comenzar a registrar tu progreso.</p>
+                    </div>
+                </section>
+
+                <!-- VISTA NUEVO TEST -->
+                <section id="view-nuevo-test" class="view-section">
+                    <div class="card">
+                        <h2>Configurar Nuevo Test (Modo Entrenamiento)</h2>
+                        <p class="subtitle">Selecciona los bloques y temas sobre los que deseas practicar. Programa basado en la convocatoria de ingreso libre publicada en el <a href="https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-26262" target="_blank" rel="noopener">BOE de 22 de diciembre de 2025</a>, cuyo proceso se desarrolla en 2026. La próxima convocatoria puede modificar el programa.</p>
+
+                        <form id="form-nuevo-test" onsubmit="event.preventDefault();">
+                            <div class="form-group">
+                                <div class="selector-controls">
+                                    <label class="checkbox-label font-bold">
+                                        <input type="checkbox" id="select-all-temario"> Seleccionar Todo el Temario
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id="bloques-selector-container" class="bloques-accordion"></div>
+
+                            <div class="form-group margin-top-large">
+                                <label for="num-preguntas">Número de preguntas:</label>
+                                <div class="questions-preset-buttons">
+                                    <button type="button" class="btn btn-outline preset-btn" data-val="5">5</button>
+                                    <button type="button" class="btn btn-outline preset-btn" data-val="10">10</button>
+                                    <button type="button" class="btn btn-outline preset-btn" data-val="15">15</button>
+                                    <button type="button" class="btn btn-outline preset-btn active" data-val="20">20</button>
+                                    <button type="button" class="btn btn-outline preset-btn" data-val="30">30</button>
+                                </div>
+                                <input type="number" id="num-preguntas" min="1" max="50" value="10" class="form-control margin-top-small">
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" id="btn-iniciar-test" class="btn btn-primary btn-large">Generar y Comenzar Test</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- VISTA SIMULACRO -->
+                <section id="view-simulacro" class="view-section">
+                    <div class="card">
+                        <h2>Simulacro de Examen TAI</h2>
+                        <p class="subtitle">Estructura similar al examen oficial de la oposición.</p>
+
+                        <div class="simulacro-info-box">
+                            <h4>Estructura del Simulacro Oficial:</h4>
+                            <ul>
+                                <li><strong>Primera Parte:</strong> 80 preguntas tipo test sobre el temario completo.</li>
+                                <li><strong>Segunda Parte:</strong> 20 preguntas sobre un Supuesto Práctico (a elegir).</li>
+                                <li><strong>Tiempo Máximo:</strong> 120 minutos.</li>
+                                <li><strong>Penalización:</strong> Errores descuentan 1/3 del valor de un acierto. Respuestas en blanco no penalizan.</li>
+                            </ul>
+                        </div>
+
+                        <form id="form-simulacro" onsubmit="event.preventDefault();">
+                            <div class="form-group">
+                                <label>Selecciona el Bloque del Supuesto Práctico (Segunda Parte):</label>
+                                <div class="radio-group">
+                                    <label class="radio-card">
+                                        <input type="radio" name="supuesto-bloque" value="bloque-3" checked="">
+                                        <div class="radio-content">
+                                            <strong>Bloque III — Desarrollo de Sistemas</strong>
+                                            <span>Modelo de datos, SQL, POO, Java EE, .NET, Web, Git, etc.</span>
+                                        </div>
+                                    </label>
+                                    <label class="radio-card">
+                                        <input type="radio" name="supuesto-bloque" value="bloque-4">
+                                        <div class="radio-content">
+                                            <strong>Bloque IV — Sistemas y Comunicaciones</strong>
+                                            <span>Sistemas operativos, BD, redes, TCP/IP, seguridad, VPN, CPD.</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="simulacro-mode-toggle">
+                                <button type="button" id="btn-simulacro-oficial" class="btn btn-primary btn-large width-full">
+                                    Iniciar Simulacro Oficial (80+20 Preguntas / 120 Minutos)
+                                </button>
+                            </div>
+
+                            <hr class="divider">
+
+                            <div class="collapsible-section">
+                                <h3>Opciones personalizadas de entrenamiento</h3>
+                                <div class="grid-2">
+                                    <div class="form-group">
+                                        <label for="sim-p1-num">Preguntas 1ª Parte:</label>
+                                        <input type="number" id="sim-p1-num" value="20" min="5" max="80" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sim-p2-num">Preguntas Supuesto (2ª Parte):</label>
+                                        <input type="number" id="sim-p2-num" value="10" min="5" max="20" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sim-tiempo">Tiempo (Minutos):</label>
+                                        <input type="number" id="sim-tiempo" value="30" min="5" max="180" class="form-control">
+                                    </div>
+                                </div>
+                                <button type="button" id="btn-simulacro-custom" class="btn btn-secondary width-full">
+                                    Iniciar Simulacro Personalizado
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- VISTA EJECUCIÓN DE TEST / SIMULACRO -->
+                <section id="view-ejecucion-test" class="view-section">
+                    <div class="test-header-bar">
+                        <div class="test-progress-info">
+                            <span id="test-question-counter">Pregunta 20 de 20</span>
+                            <span id="test-mode-badge" class="badge">Modo Entrenamiento</span>
+                        </div>
+                        <div id="test-timer-container" class="timer-display hidden">
+                            ⏱️ <span id="test-timer-text">120:00</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar-container">
+                        <div id="test-progress-bar" class="progress-bar-fill" style="width: 100%;"></div>
+                    </div>
+
+                    <div id="scenario-card" class="scenario-card hidden">
+                        <h4>Escenario del Supuesto Práctico:</h4>
+                        <p id="scenario-text"></p>
+                    </div>
+
+                    <div class="question-card" id="question-container">
+                        <div class="question-tags">
+                            <span class="badge badge-bloque" id="q-bloque-tag">Sistemas y comunicaciones</span>
+                            <span class="badge badge-tema" id="q-tema-tag">Redes locales: Ethernet y Wi-Fi.</span>
+                        </div>
+                        <h3 id="q-enunciado" class="question-title">En una red de área local inalámbrica (Wi-Fi), ¿qué protocolo de seguridad introdujo mejoras sustanciales en el cifrado utilizando el protocolo de autenticación simultánea de iguales (SAE) para evitar ataques de diccionario en redes domésticas y empresariales?</h3>
+
+                        <div class="options-list" id="q-opciones-container"><button class="option-btn" disabled=""><strong>A.</strong> <span>WEP (Wired Equivalent Privacy)</span></button><button class="option-btn" disabled=""><strong>B.</strong> <span>WPA (Wi-Fi Protected Access)</span></button><button class="option-btn incorrect" disabled=""><strong>C.</strong> <span>WPA2</span></button><button class="option-btn correct" disabled=""><strong>D.</strong> <span>WPA3</span></button></div>
+
+                        <div id="explanation-container" class="explanation-box">
+                            <div id="explanation-status" class="explanation-status text-red">✗ Respuesta Incorrecta</div>
+                            <h4>Explicación:</h4>
+                            <p id="explanation-general-text">WPA3 incorpora el protocolo SAE (Simultaneous Authentication of Equals) para sustituir el intercambio de claves anterior, aportando una protección robusta frente a ataques de fuerza bruta basados en diccionarios incluso con contraseñas débiles.</p>
+                            <div id="explanation-options-detail" class="options-detail-list"><p><strong>A:</strong> Incorrecta. WEP es un protocolo obsoleto y altamente inseguro.</p><p><strong>B:</strong> Incorrecta. WPA original supuso un parche temporal pero heredó vulnerabilidades importantes mediante TKIP.</p><p><strong>C:</strong> Incorrecta. WPA2 utilizaba AES con CCMP pero su mecanismo de intercambio de clave precompartida (PSK) era vulnerable a ataques offline de diccionario si la contraseña era débil.</p><p><strong>D:</strong> Correcta. WPA3 introduce SAE para mitigar eficazmente los ataques de diccionario.</p></div>
+                        </div>
+
+                        <div class="question-actions">
+                            <button id="btn-dejar-blanco" class="btn btn-outline hidden">Dejar en Blanco</button>
+                            <button id="btn-siguiente-pregunta" class="btn btn-primary">Siguiente Pregunta →</button>
+                            <button id="btn-finalizar-test-early" class="btn btn-danger">Finalizar Examen</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VISTA RESULTADOS -->
+                <section id="view-resultados" class="view-section active">
+                    <div class="card">
+                        <h2>Resultados del Test</h2>
+                        <p class="subtitle" id="res-fecha">Realizado el 8/10/2026, 12:51:59</p>
+
+                        <div id="res-simulacro-container" class="hidden">
+                            <div class="results-grid-2">
+                                <div class="result-block-card">
+                                    <h3>Primera Parte (Teoría)</h3>
+                                    <div class="res-stat-row"><span>Aciertos:</span> <strong id="sim-p1-aciertos" class="text-green">0</strong></div>
+                                    <div class="res-stat-row"><span>Errores:</span> <strong id="sim-p1-errores" class="text-red">0</strong></div>
+                                    <div class="res-stat-row"><span>En Blanco:</span> <strong id="sim-p1-blancos">0</strong></div>
+                                    <div class="res-stat-row font-large"><span>Puntuación Directa:</span> <strong id="sim-p1-puntos">0.00</strong></div>
+                                </div>
+                                <div class="result-block-card">
+                                    <h3>Segunda Parte (Supuesto)</h3>
+                                    <div class="res-stat-row"><span>Aciertos:</span> <strong id="sim-p2-aciertos" class="text-green">0</strong></div>
+                                    <div class="res-stat-row"><span>Errores:</span> <strong id="sim-p2-errores" class="text-red">0</strong></div>
+                                    <div class="res-stat-row"><span>En Blanco:</span> <strong id="sim-p2-blancos">0</strong></div>
+                                    <div class="res-stat-row font-large"><span>Puntuación Directa:</span> <strong id="sim-p2-puntos">0.00</strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="score-summary-card">
+                            <div class="score-main">
+                                <span class="score-label">Nota Orientativa de Entrenamiento</span>
+                                <span class="score-value" id="res-score-value">3.33</span>
+                                <span class="score-max">/ 10</span>
+                            </div>
+                            <div class="score-breakdown">
+                                <div><span class="dot dot-green"></span> Aciertos: <strong id="res-aciertos">10</strong></div>
+                                <div><span class="dot dot-red"></span> Fallos: <strong id="res-errores">10</strong></div>
+                                <div><span class="dot dot-gray"></span> Blancos: <strong id="res-blancos">0</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="results-actions">
+                            <button id="btn-revisar-examen" class="btn btn-secondary">Revisar Examen Completo</button>
+                            <button class="btn btn-primary" data-action="nav" data-target="nuevo-test">Nuevo Test</button>
+                            <button class="btn btn-outline" data-action="nav" data-target="inicio">Volver al Inicio</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VISTA PREGUNTAS FALLADAS -->
+                <section id="view-falladas" class="view-section">
+                    <div class="card">
+                        <h2>Banco de Preguntas Falladas</h2>
+                        <p class="subtitle">Repasa y domina tus puntos débiles registrados en los tests.</p>
+
+                        <div class="filter-bar">
+                            <select id="filter-falladas-bloque" class="form-control">
+                                <option value="todos">Todos los Bloques</option>
+                            </select>
+                            <button id="btn-repasar-falladas" class="btn btn-primary">Repasar Falladas Ahora</button>
+                        </div>
+
+                        <div id="falladas-list-container" class="cards-list margin-top-large">
+                            <!-- Lista dinámica de preguntas falladas -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VISTA ESTADÍSTICAS -->
+                <section id="view-estadisticas" class="view-section">
+                    <div class="card">
+                        <h2>Estadísticas Detalladas</h2>
+                        <p class="subtitle">Análisis de rendimiento por bloques y temas.</p>
+
+                        <div class="stats-summary-box">
+                            <h3>Rendimiento General</h3>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-data">
+                                        <span class="stat-value" id="st-total-tests">0</span>
+                                        <span class="stat-label">Tests Realizados</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-data">
+                                        <span class="stat-value" id="st-total-preguntas">0</span>
+                                        <span class="stat-label">Preguntas Respondidas</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-data">
+                                        <span class="stat-value" id="st-porcentaje-global">0%</span>
+                                        <span class="stat-label">% de Acierto Global</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="margin-top-large">Rendimiento por Bloque</h3>
+                        <div id="stats-bloques-bars" class="chart-bars-container">
+                            <!-- Barras de rendimiento visual CSS/SVG -->
+                        </div>
+
+                        <h3 class="margin-top-large">Temas que Necesitan Refuerzo (&lt; 60% Acierto)</h3>
+                        <div id="weak-topics-list" class="weak-topics-grid">
+                            <!-- Temas débiles -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VISTA HISTORIAL -->
+                <section id="view-historial" class="view-section">
+                    <div class="card">
+                        <div class="flex-header">
+                            <h2>Historial de Exámenes</h2>
+                            <button id="btn-borrar-historial" class="btn btn-danger btn-small">Borrar Historial</button>
+                        </div>
+                        <p class="subtitle">Registro completo de tus tests y simulacros realizados.</p>
+
+                        <div class="table-responsive margin-top-medium">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Tipo</th>
+                                        <th>Preguntas</th>
+                                        <th>A / F / B</th>
+                                        <th>Nota</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historial-table-body">
+                                    <!-- Filas de historial -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VISTA INFORMACIÓN DEL EXAMEN -->
+                <section id="view-informacion" class="view-section">
+                    <div class="card">
+                        <h2>Información Oficial de la Oposición TAI</h2>
+                        <p class="subtitle">Estructura de referencia según la convocatoria AGE de ingreso libre publicada en el BOE el 22 de diciembre de 2025. La convocatoria de 2027 podría modificarla.</p>
+
+                        <div class="info-details-body">
+                            <h3>Estructura del Ejercicio Único</h3>
+                            <p>El proceso selectivo consta de un ejercicio único compuesto de dos partes obligatorias y eliminatorias:</p>
+
+                            <div class="info-box-highlight margin-top-small">
+                                <h4>Primera Parte (Teoría)</h4>
+                                <ul>
+                                    <li>Cuestionario de máximo <strong>80 preguntas</strong> tipo test sobre las materias del programa.</li>
+                                    <li>Pueden incluirse 5 preguntas adicionales de reserva.</li>
+                                    <li>Puntuación de 0 a 50 puntos. Mínimo exigido: 25 puntos.</li>
+                                </ul>
+                            </div>
+
+                            <div class="info-box-highlight margin-top-small">
+                                <h4>Segunda Parte (Supuesto Práctico)</h4>
+                                <ul>
+                                    <li>Cuestionario de <strong>20 preguntas</strong> tipo test sobre un supuesto práctico.</li>
+                                    <li>A elegir entre dos propuestos: uno del <strong>Bloque III</strong> (Desarrollo) y otro del <strong>Bloque IV</strong> (Sistemas).</li>
+                                    <li>Puntuación de 0 a 50 puntos. Mínimo exigido: 25 puntos.</li>
+                                </ul>
+                            </div>
+
+                            <h3 class="margin-top-large">Criterios de Calificación y Penalización</h3>
+                            <ul>
+                                <li><strong>Tiempo Total:</strong> 120 minutos.</li>
+                                <li><strong>Respuestas Correctas:</strong> Suman el valor asignado.</li>
+                                <li><strong>Respuestas Erróneas:</strong> Penalizan descontando <strong>1/3 (un tercio)</strong> del valor de una correcta.</li>
+                                <li><strong>Respuestas en Blanco:</strong> No penalizan ni suman.</li>
+                            </ul>
+
+                            <div class="alert alert-warning margin-top-medium">
+                                ⚠️ <strong>Nota sobre la nota oficial:</strong> Las puntuaciones directas se transforman mediante baremos y criterios aprobados por la Comisión Permanente de Selección. Las notas mostradas en esta app son referencias orientativas de entrenamiento.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VISTA CONFIGURACIÓN -->
+                <section id="view-configuracion" class="view-section">
+                    <div class="card">
+                        <h2>Configuración de la Aplicación</h2>
+
+                        <div class="config-section margin-top-medium">
+                            <h3>API Key de Google Gemini</h3>
+                            <p>Esta aplicación requiere una clave de API de Gemini para generar preguntas dinámicas.</p>
+
+                            <div class="alert alert-info">
+                                🔒 <strong>Aviso de seguridad:</strong> La API key se almacena localmente en tu navegador (localStorage). Es adecuada para uso individual/local.
+                            </div>
+
+                            <div class="form-group margin-top-small">
+                                <label for="api-key-input">Gemini API Key:</label>
+                                <div class="input-group">
+                                    <input type="password" id="api-key-input" class="form-control" placeholder="AIzaSy...">
+                                    <button type="button" id="btn-toggle-api-key" class="btn btn-outline">👁️</button>
+                                </div>
+                            </div>
+
+                            <div class="form-actions-inline">
+                                <button type="button" id="btn-save-api-key" class="btn btn-primary">Guardar Clave</button>
+                                <button type="button" id="btn-delete-api-key" class="btn btn-danger">Eliminar Clave</button>
+                            </div>
+
+                            <p class="margin-top-small">
+                                ¿No tienes una API Key? <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Consíguela gratis en Google AI Studio ↗</a>
+                            </p>
+                        </div>
+
+                        <hr class="divider">
+
+                        <div class="config-section">
+                            <h3>Gestión de Datos</h3>
+                            <p>Exporta o importa tu progreso para no perder tus datos o sincronizarlos en otro equipo.</p>
+                            
+                            <div class="form-actions-inline margin-top-small">
+                                <button type="button" id="btn-export-data" class="btn btn-secondary">📥 Exportar Datos (JSON)</button>
+                                <button type="button" id="btn-trigger-import" class="btn btn-outline">📤 Importar Datos (JSON)</button>
+                                <input type="file" id="import-file-input" accept=".json" class="hidden">
+                            </div>
+                        </div>
+
+                        <hr class="divider">
+
+                        <div class="config-section">
+                            <h3>Acerca de esta Aplicación</h3>
+                            <p><strong>Preparador TAI — Oposiciones AGE</strong></p>
+                            <p>Herramienta para el estudio y autoevaluación del cuerpo de Técnico Auxiliar de Informática de la Administración General del Estado.</p>
+                            <p class="text-muted font-small">Las preguntas son generadas mediante inteligencia artificial y no representan exámenes oficiales de la Administración.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <footer class="site-footer">
+                <p>Original en <a href="https://jfcode.es/test-opo-tai/" target="_blank" rel="noopener">https://jfcode.es/test-opo-tai/</a> · Adaptado y renovado por joseangelESteenidol © 2026</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Modales / Indicador de Carga -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner-card">
+            <div class="spinner"></div>
+            <h3 id="loading-title">Generando Preguntas</h3>
+            <p id="loading-subtitle">Conectando con Gemini API...</p>
+        </div>
+    </div>
+    
+    <script src="./Preparador TAI - Oposiciones AGE_files/app.js.descarga"></script>
+
+</body></html>

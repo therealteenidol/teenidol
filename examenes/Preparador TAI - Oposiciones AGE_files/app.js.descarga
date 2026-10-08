@@ -1,0 +1,1051 @@
+/**
+ * PREPARADOR TAI - APLICACIÓN WEB DE PREPARACIÓN DE OPOSICIONES
+ * Sistema Frontend puro con generación dinámica mediante Gemini API
+ */
+
+// ============================================================
+// 1. PROGRAMA TAI DE INGRESO LIBRE (BOE-A-2025-26262)
+// ============================================================
+const TEMARIO = [
+    {
+        id: "bloque-1",
+        numero: "I",
+        nombre: "Administración electrónica y transparencia",
+        temas: [
+            {
+                id: "bloque-1-tema-1",
+                numero: 1,
+                nombre: "La sociedad de la información. Identidad y firma electrónica: régimen jurídico. El DNI electrónico. La Agenda Digital para España.",
+                contenido: "Sociedad de la información. Identidad y firma electrónica y su régimen jurídico. DNI electrónico. Agenda Digital para España."
+            },
+            {
+                id: "bloque-1-tema-2",
+                numero: 2,
+                nombre: "La protección de datos personales y su régimen jurídico: principios, derechos y obligaciones. Derechos digitales.",
+                contenido: "Protección de datos personales y su régimen jurídico: principios, derechos y obligaciones. Derechos digitales."
+            },
+            {
+                id: "bloque-1-tema-3",
+                numero: 3,
+                nombre: "Acceso electrónico de los ciudadanos a los servicios públicos y normativa de desarrollo. Gestión electrónica de los procedimientos administrativos: registros, notificaciones y uso de medios electrónicos. Esquema Nacional de Seguridad y de Interoperabilidad. Normas técnicas de Interoperabilidad. Infraestructuras y servicios comunes en materia de administración electrónica.",
+                contenido: "Acceso electrónico de los ciudadanos a los servicios públicos y normativa de desarrollo. Gestión electrónica de procedimientos administrativos, registros y notificaciones. Uso de medios electrónicos. Esquema Nacional de Seguridad (ENS), Esquema Nacional de Interoperabilidad (ENI), Normas Técnicas de Interoperabilidad e infraestructuras y servicios comunes de administración electrónica."
+            },
+            {
+                id: "bloque-1-tema-4",
+                numero: 4,
+                nombre: "La Ley 19/2013, de 9 de diciembre, de transparencia, acceso a la información pública y buen gobierno. La Agenda 2030 y los Objetivos de Desarrollo Sostenible.",
+                contenido: "Ley 19/2013, de transparencia, acceso a la información pública y buen gobierno. Agenda 2030 y Objetivos de Desarrollo Sostenible (ODS)."
+            },
+            {
+                id: "bloque-1-tema-5",
+                numero: 5,
+                nombre: "Políticas de igualdad y contra la violencia de género. Políticas de igualdad de trato y no discriminación de las personas LGTBI. Discapacidad y dependencia.",
+                contenido: "Políticas de igualdad y contra la violencia de género. Igualdad de trato y no discriminación de las personas LGTBI. Régimen de discapacidad y dependencia."
+            }
+        ]
+    },
+    {
+        id: "bloque-2",
+        numero: "II",
+        nombre: "Tecnología básica",
+        temas: [
+            {
+                id: "bloque-2-tema-1",
+                numero: 1,
+                nombre: "Informática básica. Representación y comunicación de la información: elementos constitutivos, características y funciones. Arquitectura de ordenadores. Componentes internos de los equipos microinformáticos. Periféricos: conectividad y administración. Elementos de impresión, almacenamiento, visualización y digitalización.",
+                contenido: "Conceptos básicos de informática y representación y comunicación de la información. Elementos constitutivos, características y funciones de un sistema de información. Arquitectura de ordenadores y componentes internos de equipos microinformáticos. Periféricos, conectividad y administración; elementos de impresión, almacenamiento, visualización y digitalización."
+            },
+            {
+                id: "bloque-2-tema-2",
+                numero: 2,
+                nombre: "Tipos abstractos y estructuras de datos. Organizaciones de ficheros. Algoritmos. Formatos de información y ficheros.",
+                contenido: "Tipos abstractos de datos y estructuras de datos. Organización de ficheros. Algoritmos. Formatos de información y ficheros."
+            },
+            {
+                id: "bloque-2-tema-3",
+                numero: 3,
+                nombre: "Sistemas operativos. Características técnicas y elementos constitutivos. Sistemas Windows. Sistemas Unix y Linux. Sistemas operativos para dispositivos móviles.",
+                contenido: "Características técnicas y elementos constitutivos de los sistemas operativos. Sistemas Windows, Unix y Linux, y sistemas operativos para dispositivos móviles."
+            }
+        ]
+    },
+    {
+        id: "bloque-3",
+        numero: "III",
+        nombre: "Desarrollo de sistemas",
+        temas: [
+            {
+                id: "bloque-3-tema-1",
+                numero: 1,
+                nombre: "Modelado de datos, metodologías y reglas. Entidades, atributos y relaciones. Diseño de bases de datos. Diseño lógico y físico. El modelo lógico relacional. Normalización.",
+                contenido: "Modelado de datos, metodologías y reglas. Entidades, atributos y relaciones. Diseño lógico y físico de bases de datos, modelo lógico relacional y normalización."
+            },
+            {
+                id: "bloque-3-tema-2",
+                numero: 2,
+                nombre: "Lenguajes de programación. Representación de tipos de datos. Operadores. Instrucciones condicionales. Bucles y recursividad. Procedimientos, funciones y parámetros. Vectores y registros. Estructura de un programa.",
+                contenido: "Lenguajes de programación y representación de tipos de datos. Operadores, instrucciones condicionales, bucles y recursividad. Procedimientos, funciones y parámetros. Vectores, registros y estructura de un programa."
+            },
+            {
+                id: "bloque-3-tema-3",
+                numero: 3,
+                nombre: "Lenguajes de interrogación de bases de datos. Estándar ANSI SQL. Procedimientos almacenados. Eventos y disparadores.",
+                contenido: "Lenguajes de interrogación de bases de datos y estándar ANSI SQL. Procedimientos almacenados, eventos y disparadores."
+            },
+            {
+                id: "bloque-3-tema-4",
+                numero: 4,
+                nombre: "Diseño y programación orientada a objetos. Objetos, clases, herencia, métodos y sobrecarga. Ventajas e inconvenientes. Patrones de diseño y lenguaje de modelado unificado (UML).",
+                contenido: "Diseño y programación orientada a objetos. Objetos, clases, herencia, métodos y sobrecarga; ventajas e inconvenientes. Patrones de diseño y lenguaje de modelado unificado (UML)."
+            },
+            {
+                id: "bloque-3-tema-5",
+                numero: 5,
+                nombre: "Arquitectura Java EE/Jakarta EE y plataforma .NET: componentes, persistencia y seguridad. Características, elementos, lenguajes y funciones en ambos entornos. Desarrollo de interfaces.",
+                contenido: "Arquitecturas Java EE/Jakarta EE y .NET: componentes, persistencia, seguridad, características, elementos, lenguajes y funciones de ambos entornos. Desarrollo de interfaces."
+            },
+            {
+                id: "bloque-3-tema-6",
+                numero: 6,
+                nombre: "Arquitectura de sistemas cliente/servidor y multicapas: componentes y operación. Arquitecturas de servicios web y protocolos asociados. Programas para control de versiones. Metodologías de desarrollo. Pruebas.",
+                contenido: "Arquitecturas cliente/servidor y multicapas: componentes y operación. Arquitecturas de servicios web y protocolos asociados. Programas de control de versiones, metodologías de desarrollo y pruebas."
+            },
+            {
+                id: "bloque-3-tema-7",
+                numero: 7,
+                nombre: "Aplicaciones web, multiplataforma y multidispositivo. Desarrollo web front-end y en servidor. HTML, XML y derivaciones. Navegadores y lenguajes de programación web. Lenguajes de script.",
+                contenido: "Aplicaciones web multiplataforma y multidispositivo. Desarrollo front-end y en servidor. HTML, XML y sus derivaciones. Navegadores, lenguajes de programación web y lenguajes de script."
+            },
+            {
+                id: "bloque-3-tema-8",
+                numero: 8,
+                nombre: "Accesibilidad, diseño universal y usabilidad. Tecnologías, productos y servicios de la sociedad de la información. Confidencialidad y disponibilidad en puestos de usuario final. Seguridad en el desarrollo de sistemas.",
+                contenido: "Accesibilidad, diseño universal y usabilidad de tecnologías, productos y servicios relacionados con la sociedad de la información. Confidencialidad y disponibilidad de la información en puestos de usuario final. Conceptos de seguridad en el desarrollo de sistemas."
+            }
+        ]
+    },
+    {
+        id: "bloque-4",
+        numero: "IV",
+        nombre: "Sistemas y comunicaciones",
+        temas: [
+            {
+                id: "bloque-4-tema-1",
+                numero: 1,
+                nombre: "Administración del sistema operativo y software de base. Actualización, mantenimiento y reparación del sistema operativo.",
+                contenido: "Administración del sistema operativo y software de base. Actualización, mantenimiento y reparación del sistema operativo."
+            },
+            {
+                id: "bloque-4-tema-2",
+                numero: 2,
+                nombre: "Administración de bases de datos. Sistemas de almacenamiento y su virtualización. Políticas, sistemas y procedimientos de backup y recuperación. Backup de sistemas físicos y virtuales. Virtualización de sistemas y de puestos de usuario.",
+                contenido: "Administración de bases de datos. Sistemas de almacenamiento y virtualización. Políticas, sistemas y procedimientos de copias de seguridad y recuperación, tanto de sistemas físicos como virtuales. Virtualización de sistemas y puestos de usuario."
+            },
+            {
+                id: "bloque-4-tema-3",
+                numero: 3,
+                nombre: "Administración de servidores de correo electrónico y sus protocolos. Administración de contenedores y microservicios.",
+                contenido: "Administración de servidores de correo electrónico y sus protocolos. Administración de contenedores y microservicios."
+            },
+            {
+                id: "bloque-4-tema-4",
+                numero: 4,
+                nombre: "Administración de redes de área local. Gestión de usuarios y dispositivos. Monitorización y control de tráfico.",
+                contenido: "Administración de redes de área local. Gestión de usuarios y dispositivos. Monitorización y control del tráfico."
+            },
+            {
+                id: "bloque-4-tema-5",
+                numero: 5,
+                nombre: "Seguridad de los sistemas de información: seguridad física y lógica, amenazas y vulnerabilidades. Técnicas criptográficas y protocolos seguros. Mecanismos de firma digital. Infraestructura física de un CPD. Gestión de incidencias y control remoto de puestos de usuario.",
+                contenido: "Seguridad de los sistemas de información: seguridad física y lógica, amenazas y vulnerabilidades. Técnicas criptográficas, protocolos seguros y mecanismos de firma digital. Acondicionamiento y equipamiento de la infraestructura física de un centro de proceso de datos (CPD). Sistemas de gestión de incidencias y control remoto de puestos de usuario."
+            },
+            {
+                id: "bloque-4-tema-6",
+                numero: 6,
+                nombre: "Comunicaciones. Medios y modos de transmisión. Equipos terminales, de interconexión y conmutación. Redes de comunicaciones. Redes de conmutación y de difusión. Comunicaciones móviles e inalámbricas.",
+                contenido: "Medios y modos de transmisión. Equipos terminales, de interconexión y conmutación. Redes de comunicaciones, de conmutación y de difusión. Comunicaciones móviles e inalámbricas."
+            },
+            {
+                id: "bloque-4-tema-7",
+                numero: 7,
+                nombre: "El modelo TCP/IP y el modelo de referencia de interconexión de sistemas abiertos (OSI) de ISO. Protocolos TCP/IP.",
+                contenido: "Modelo TCP/IP y modelo de referencia OSI de ISO. Protocolos TCP/IP."
+            },
+            {
+                id: "bloque-4-tema-8",
+                numero: 8,
+                nombre: "Internet: arquitectura de red, origen, evolución y estado actual. Principales servicios. Protocolos HTTP, HTTPS y SSL/TLS.",
+                contenido: "Arquitectura de Internet, origen, evolución y estado actual. Principales servicios. Protocolos HTTP y HTTPS, y SSL/TLS."
+            },
+            {
+                id: "bloque-4-tema-9",
+                numero: 9,
+                nombre: "Seguridad y protección en redes de comunicaciones. Seguridad perimetral. Acceso remoto seguro a redes. Redes privadas virtuales (VPN). Seguridad en el puesto del usuario.",
+                contenido: "Seguridad y protección en redes de comunicaciones. Seguridad perimetral, acceso remoto seguro, redes privadas virtuales (VPN) y seguridad en el puesto del usuario."
+            }
+        ]
+    }
+];
+
+// ============================================================
+// 2. CONSTANTES Y CONFIGURACIÓN
+// ============================================================
+const STORAGE_KEYS = {
+    API_KEY: "tai_api_key",
+    HISTORIAL: "tai_historial",
+    PREGUNTAS_FALLADAS: "tai_preguntas_falladas",
+    CONFIGURACION: "tai_configuracion",
+    THEME: "tai_theme"
+};
+
+const GEMINI_CONFIG = {
+    model: "gemini-3.5-flash-lite",
+    endpoint: "https://generativelanguage.googleapis.com/v1beta/models/"
+};
+
+// ============================================================
+// 3. ESTADO GLOBAL
+// ============================================================
+const state = {
+    vistaActual: "inicio",
+    preguntas: [],
+    preguntaActualIndex: 0,
+    respuestas: [],
+    testEnCurso: false,
+    modo: null, // "entrenamiento" | "simulacro"
+    inicioTest: null,
+    temporizadorId: null,
+    tiempoRestanteSegundos: 0,
+    supuestoBloqueSeleccionado: "bloque-3",
+    escenarioSupuesto: null
+};
+
+// ============================================================
+// 4. INICIALIZACIÓN
+// ============================================================
+document.addEventListener("DOMContentLoaded", () => {
+    inicializarApp();
+});
+
+function inicializarApp() {
+    configurarNavegacion();
+    cargarTema();
+    actualizarBadgeAPI();
+    renderizarInicio();
+    renderizarSelectorTemario();
+    configurarEventosUI();
+}
+
+function configurarNavegacion() {
+    const navButtons = document.querySelectorAll(".nav-btn, [data-action='nav']");
+    navButtons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const targetView = btn.getAttribute("data-view") || btn.getAttribute("data-target");
+            if (targetView) {
+                navegarA(targetView);
+            }
+        });
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById("mobile-menu-toggle");
+    const sidebar = document.getElementById("sidebar");
+    
+    if (mobileMenuBtn && sidebar) {
+        mobileMenuBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle("open");
+        });
+
+        // Cerrar el menú si se hace clic fuera de él
+        document.addEventListener("click", (e) => {
+            if (sidebar.classList.contains("open") && !sidebar.contains(e.target) && e.target !== mobileMenuBtn) {
+                sidebar.classList.remove("open");
+            }
+        });
+    }
+}
+
+function navegarA(vistaId) {
+    if (state.testEnCurso && vistaId !== "ejecucion-test") {
+        if (!confirm("Hay un examen en curso. Si sales, perderás el progreso actual. ¿Deseas salir?")) {
+            return;
+        }
+        detenerTemporizador();
+        state.testEnCurso = false;
+    }
+
+    state.vistaActual = vistaId;
+
+    // Actualizar secciones visibles
+    document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+    const secTarget = document.getElementById(`view-${vistaId}`);
+    if (secTarget) secTarget.classList.add("active");
+
+    // Actualizar menú activo
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-view") === vistaId);
+    });
+
+    // Cierre automático del menú lateral en dispositivos móviles al cambiar de vista
+    const sidebar = document.getElementById("sidebar");
+    if (sidebar && sidebar.classList.contains("open")) {
+        sidebar.classList.remove("open");
+    }
+
+    // Cargar datos dinámicos según vista
+    if (vistaId === "inicio") renderizarInicio();
+    if (vistaId === "falladas") renderizarPreguntasFalladas();
+    if (vistaId === "estadisticas") renderizarEstadisticas();
+    if (vistaId === "historial") renderizarHistorial();
+
+    window.scrollTo(0, 0);
+}
+// ============================================================
+// 5. GESTIÓN DE CONFIGURACIÓN Y TEMA
+// ============================================================
+function cargarTema() {
+    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    document.getElementById("theme-toggle").textContent = savedTheme === "dark" ? "☀️" : "🌙";
+}
+
+document.getElementById("theme-toggle").addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem(STORAGE_KEYS.THEME, newTheme);
+    document.getElementById("theme-toggle").textContent = newTheme === "dark" ? "☀️" : "🌙";
+});
+
+function actualizarBadgeAPI() {
+    const badge = document.getElementById("api-status-badge");
+    const apiKey = localStorage.getItem(STORAGE_KEYS.API_KEY);
+    if (apiKey) {
+        badge.textContent = "API Configurada";
+        badge.className = "badge badge-success";
+    } else {
+        badge.textContent = "API No Configurada";
+        badge.className = "badge badge-warning";
+    }
+}
+
+// ============================================================
+// 6. RENDERIZACIÓN DE VISTAS PRINCIPALES
+// ============================================================
+function renderizarInicio() {
+    const historial = JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORIAL) || "[]");
+    const emptyNotice = document.getElementById("dash-empty-notice");
+
+    if (historial.length === 0) {
+        emptyNotice.classList.remove("hidden");
+        document.getElementById("dash-tests-realizados").textContent = "0";
+        document.getElementById("dash-preguntas-totales").textContent = "0";
+        document.getElementById("dash-aciertos").textContent = "0";
+        document.getElementById("dash-fallos").textContent = "0";
+        document.getElementById("dash-porcentaje").textContent = "0%";
+        document.getElementById("dash-nota-media").textContent = "0.0";
+        return;
+    }
+
+    emptyNotice.classList.add("hidden");
+    let totalPreguntas = 0, totalAciertos = 0, totalFallos = 0, sumaNotas = 0;
+
+    historial.forEach(item => {
+        totalPreguntas += item.totalPreguntas || 0;
+        totalAciertos += item.aciertos || 0;
+        totalFallos += item.errores || 0;
+        sumaNotas += item.nota || 0;
+    });
+
+    const notaMedia = (sumaNotas / historial.length).toFixed(1);
+    const pctAcierto = totalPreguntas > 0 ? ((totalAciertos / totalPreguntas) * 100).toFixed(1) : 0;
+
+    document.getElementById("dash-tests-realizados").textContent = historial.length;
+    document.getElementById("dash-preguntas-totales").textContent = totalPreguntas;
+    document.getElementById("dash-aciertos").textContent = totalAciertos;
+    document.getElementById("dash-fallos").textContent = totalFallos;
+    document.getElementById("dash-porcentaje").textContent = `${pctAcierto}%`;
+    document.getElementById("dash-nota-media").textContent = notaMedia;
+}
+function renderizarSelectorTemario() {
+    const container = document.getElementById("bloques-selector-container");
+    container.innerHTML = "";
+
+    TEMARIO.forEach(bloque => {
+        const bloqueDiv = document.createElement("div");
+        bloqueDiv.className = "bloque-group";
+
+        let temasHtml = bloque.temas.map(tema => `
+            <label class="checkbox-label">
+                <input type="checkbox" class="cb-tema" data-bloque="${bloque.id}" data-tema="${tema.id}">
+                <span><strong>Tema ${tema.numero}:</strong> ${tema.nombre}</span>
+            </label>
+        `).join("");
+
+        bloqueDiv.innerHTML = `
+            <div class="bloque-header">
+                <label class="checkbox-label">
+                    <input type="checkbox" class="cb-bloque" data-bloque="${bloque.id}">
+                    <span><strong>BLOQUE ${bloque.numero}:</strong> ${bloque.nombre}</span>
+                </label>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="temas-container">
+                ${temasHtml}
+            </div>
+        `;
+
+        // Evento para alternar el desplegable del bloque
+        const header = bloqueDiv.querySelector(".bloque-header");
+        header.addEventListener("click", (e) => {
+            if (e.target.tagName !== "INPUT") {
+                bloqueDiv.classList.toggle("expanded");
+            }
+        });
+
+        container.appendChild(bloqueDiv);
+    });
+
+    // Eventos de selección jerárquica
+    document.getElementById("select-all-temario").addEventListener("change", (e) => {
+        const checked = e.target.checked;
+        document.querySelectorAll(".cb-bloque, .cb-tema").forEach(cb => cb.checked = checked);
+    });
+
+    document.querySelectorAll(".cb-bloque").forEach(cbBloque => {
+        cbBloque.addEventListener("change", (e) => {
+            e.stopPropagation();
+            const bloqueId = e.target.getAttribute("data-bloque");
+            document.querySelectorAll(`.cb-tema[data-bloque="${bloqueId}"]`).forEach(cb => {
+                cb.checked = e.target.checked;
+            });
+        });
+    });
+}
+
+// ============================================================
+// 7. GENERACIÓN DE PREGUNTAS CON GEMINI API
+// ============================================================
+async function solicitarPreguntasGemini(temasSeleccionados, numPreguntas, esSupuesto = false, bloqueSupuestoNombre = "") {
+    const apiKey = localStorage.getItem(STORAGE_KEYS.API_KEY);
+    if (!apiKey) throw new Error("Debes configurar tu API Key de Gemini en el apartado de Configuración.");
+
+    let contextoTemas = temasSeleccionados.map(t => 
+        `BLOQUE: ${t.bloqueNombre}\nTEMA ${t.temaNumero}: ${t.temaNombre}\nCONTENIDO: ${t.contenido}`
+    ).join("\n---\n");
+
+    let prompt = "";
+
+    if (esSupuesto) {
+        prompt = `Actúa como preparador experto de oposiciones TAI (Técnico Auxiliar de Informática).
+Genera un SUPUESTO PRÁCTICO técnico de nivel oposición basado exclusivamente en el siguiente bloque: ${bloqueSupuestoNombre}.
+Debes incluir un 'escenario' descriptivo común de una infraestructura o sistema, seguido de exactamente ${numPreguntas} preguntas sobre dicho escenario.
+
+Temario de referencia:
+${contextoTemas}
+
+Devuelve EXCLUSIVAMENTE un objeto JSON válido con este formato:
+{
+  "escenario": "Texto largo explicando el caso práctico...",
+  "preguntas": [
+    {
+      "id": "p-1",
+      "enunciado": "...",
+      "opciones": ["Opción A", "Opción B", "Opción C", "Opción D"],
+      "respuestaCorrecta": 0,
+      "explicacion": "Explicación general",
+      "explicacionOpciones": ["Por qué A", "Por qué B", "Por qué C", "Por qué D"],
+      "bloqueId": "...",
+      "bloque": "...",
+      "temaId": "...",
+      "tema": "..."
+    }
+  ]
+}`;
+    } else {
+        prompt = `Actúa como preparador experto de oposiciones de Técnico Auxiliar de Informática (TAI) de la Administración del Estado.
+Genera exactamente ${numPreguntas} preguntas de opción múltiple de nivel examen oficial.
+Distribuye las preguntas de forma equilibrada entre los temas proporcionados.
+
+Temas seleccionados:
+${contextoTemas}
+
+REQUISITOS OBLIGATORIOS:
+1. Exactamente 4 opciones por pregunta.
+2. Una única respuesta correcta (índice 0, 1, 2 o 3).
+3. Nivel exigente de oposición real.
+4. Explicaciones rigurosas para cada opción.
+
+Devuelve EXCLUSIVAMENTE un objeto JSON válido con esta estructura:
+{
+  "preguntas": [
+    {
+      "id": "p-1",
+      "enunciado": "...",
+      "opciones": ["A...", "B...", "C...", "D..."],
+      "respuestaCorrecta": 0,
+      "explicacion": "...",
+      "explicacionOpciones": ["Explicación A", "Explicación B", "Explicación C", "Explicación D"],
+      "bloqueId": "id-bloque",
+      "bloque": "Nombre del bloque",
+      "temaId": "id-tema",
+      "tema": "Nombre del tema"
+    }
+  ]
+}`;
+    }
+
+    const url = `${GEMINI_CONFIG.endpoint}${GEMINI_CONFIG.model}:generateContent?key=${apiKey}`;
+
+    const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { responseMimeType: "application/json" }
+        })
+    });
+
+    if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error?.message || `Error en la API de Gemini (${response.status})`);
+    }
+
+    const data = await response.json();
+    const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!rawText) throw new Error("Respuesta vacía recibida de Gemini.");
+
+    // Limpiar Markdown si existe
+    let cleanedJson = rawText.trim();
+    if (cleanedJson.startsWith("```json")) cleanedJson = cleanedJson.substring(7);
+    if (cleanedJson.startsWith("```")) cleanedJson = cleanedJson.substring(3);
+    if (cleanedJson.endsWith("```")) cleanedJson = cleanedJson.substring(0, cleanedJson.length - 3);
+
+    const parsed = JSON.parse(cleanedJson.trim());
+    return parsed;
+}
+
+// ============================================================
+// 8. LÓGICA DE EJECUCIÓN DEL TEST
+// ============================================================
+function iniciarTestEntrenamiento(preguntas) {
+    state.preguntas = preguntas;
+    state.preguntaActualIndex = 0;
+    state.respuestas = [];
+    state.testEnCurso = true;
+    state.modo = "entrenamiento";
+    state.inicioTest = new Date();
+
+    document.getElementById("test-mode-badge").textContent = "Modo Entrenamiento";
+    document.getElementById("test-timer-container").classList.add("hidden");
+    document.getElementById("scenario-card").classList.add("hidden");
+    document.getElementById("btn-dejar-blanco").classList.add("hidden");
+
+    navegarA("ejecucion-test");
+    renderizarPreguntaActual();
+}
+
+function renderizarPreguntaActual() {
+    const q = state.preguntas[state.preguntaActualIndex];
+    const total = state.preguntas.length;
+
+    // Actualizar Progreso
+    document.getElementById("test-question-counter").textContent = `Pregunta ${state.preguntaActualIndex + 1} de ${total}`;
+    const pct = ((state.preguntaActualIndex + 1) / total) * 100;
+    document.getElementById("test-progress-bar").style.width = `${pct}%`;
+
+    // Etiquetas y Enunciado
+    document.getElementById("q-bloque-tag").textContent = q.bloque || "TAI";
+    document.getElementById("q-tema-tag").textContent = q.tema || "General";
+    document.getElementById("q-enunciado").textContent = q.enunciado;
+
+    // Contenedor Opciones
+    const optionsContainer = document.getElementById("q-opciones-container");
+    optionsContainer.innerHTML = "";
+
+    const letras = ["A", "B", "C", "D"];
+    q.opciones.forEach((optText, index) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerHTML = `<strong>${letras[index]}.</strong> <span>${optText}</span>`;
+        btn.onclick = () => seleccionarRespuesta(index);
+        optionsContainer.appendChild(btn);
+    });
+
+    // Resetear Explicación y Botones
+    document.getElementById("explanation-container").classList.add("hidden");
+    document.getElementById("btn-siguiente-pregunta").classList.add("hidden");
+
+    // Verificar si ya fue respondida
+    const respGuardada = state.respuestas[state.preguntaActualIndex];
+    if (respGuardada !== undefined) {
+        aplicarEstadoRespuesta(respGuardada);
+    }
+}
+
+function seleccionarRespuesta(indexOpcion) {
+    if (state.respuestas[state.preguntaActualIndex] !== undefined && state.modo === "entrenamiento") return;
+
+    state.respuestas[state.preguntaActualIndex] = indexOpcion;
+    const q = state.preguntas[state.preguntaActualIndex];
+
+    if (state.modo === "entrenamiento") {
+        aplicarEstadoRespuesta(indexOpcion);
+        
+        // Si falló, registrar automáticamente en falladas
+        if (indexOpcion !== q.respuestaCorrecta) {
+            guardarPreguntaFallada(q, indexOpcion);
+        }
+    } else {
+        // En simulacro pasa directo a siguiente o habilita el paso
+        if (state.preguntaActualIndex < state.preguntas.length - 1) {
+            state.preguntaActualIndex++;
+            renderizarPreguntaActual();
+        } else {
+            finalizarExamen();
+        }
+    }
+}
+
+function aplicarEstadoRespuesta(indexOpcion) {
+    const q = state.preguntas[state.preguntaActualIndex];
+    const btns = document.querySelectorAll(".option-btn");
+
+    btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.respuestaCorrecta) {
+            btn.classList.add("correct");
+        }
+        if (idx === indexOpcion && indexOpcion !== q.respuestaCorrecta) {
+            btn.classList.add("incorrect");
+        }
+    });
+
+    // Mostrar Explicación
+    const expContainer = document.getElementById("explanation-container");
+    const expStatus = document.getElementById("explanation-status");
+    expContainer.classList.remove("hidden");
+
+    if (indexOpcion === q.respuestaCorrecta) {
+        expStatus.textContent = "✓ ¡Respuesta Correcta!";
+        expStatus.className = "explanation-status text-green";
+    } else {
+        expStatus.textContent = "✗ Respuesta Incorrecta";
+        expStatus.className = "explanation-status text-red";
+    }
+
+    document.getElementById("explanation-general-text").textContent = q.explicacion;
+
+    const detailsDiv = document.getElementById("explanation-options-detail");
+    detailsDiv.innerHTML = "";
+    if (q.explicacionOpciones && q.explicacionOpciones.length === 4) {
+        const letras = ["A", "B", "C", "D"];
+        q.explicacionOpciones.forEach((exp, i) => {
+            const p = document.createElement("p");
+            p.innerHTML = `<strong>${letras[i]}:</strong> ${exp}`;
+            detailsDiv.appendChild(p);
+        });
+    }
+
+    document.getElementById("btn-siguiente-pregunta").classList.remove("hidden");
+}
+
+document.getElementById("btn-siguiente-pregunta").addEventListener("click", () => {
+    if (state.preguntaActualIndex < state.preguntas.length - 1) {
+        state.preguntaActualIndex++;
+        renderizarPreguntaActual();
+    } else {
+        finalizarExamen();
+    }
+});
+
+// ============================================================
+// 9. SIMULACRO Y TEMPORIZADOR
+// ============================================================
+function iniciarSimulacro(preguntasParte1, preguntasParte2, duracionMinutos, escenario) {
+    state.preguntas = [...preguntasParte1, ...preguntasParte2];
+    state.preguntaActualIndex = 0;
+    state.respuestas = new Array(state.preguntas.length).fill(null);
+    state.testEnCurso = true;
+    state.modo = "simulacro";
+    state.inicioTest = new Date();
+    state.escenarioSupuesto = escenario;
+
+    document.getElementById("test-mode-badge").textContent = "Simulacro Oficial";
+    document.getElementById("test-timer-container").classList.remove("hidden");
+    document.getElementById("btn-dejar-blanco").classList.remove("hidden");
+
+    if (escenario) {
+        const scCard = document.getElementById("scenario-card");
+        scCard.classList.remove("hidden");
+        document.getElementById("scenario-text").textContent = escenario;
+    }
+
+    iniciarTemporizador(duracionMinutos * 60);
+    navegarA("ejecucion-test");
+    renderizarPreguntaActual();
+}
+
+function iniciarTemporizador(segundos) {
+    detenerTemporizador();
+    state.tiempoRestanteSegundos = segundos;
+
+    const actualizarDisplay = () => {
+        const m = Math.floor(state.tiempoRestanteSegundos / 60);
+        const s = state.tiempoRestanteSegundos % 60;
+        document.getElementById("test-timer-text").textContent = 
+            `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        
+        if (state.tiempoRestanteSegundos <= 0) {
+            detenerTemporizador();
+            alert("¡El tiempo del examen ha finalizado!");
+            finalizarExamen();
+        }
+        state.tiempoRestanteSegundos--;
+    };
+
+    actualizarDisplay();
+    state.temporizadorId = setInterval(actualizarDisplay, 1000);
+}
+
+function detenerTemporizador() {
+    if (state.temporizadorId) {
+        clearInterval(state.temporizadorId);
+        state.temporizadorId = null;
+    }
+}
+
+document.getElementById("btn-dejar-blanco").addEventListener("click", () => {
+    state.respuestas[state.preguntaActualIndex] = null;
+    if (state.preguntaActualIndex < state.preguntas.length - 1) {
+        state.preguntaActualIndex++;
+        renderizarPreguntaActual();
+    } else {
+        finalizarExamen();
+    }
+});
+
+// ============================================================
+// 10. FINALIZACIÓN Y GUARDADO DE RESULTADOS
+// ============================================================
+function finalizarExamen() {
+    detenerTemporizador();
+    state.testEnCurso = false;
+
+    let aciertos = 0, errores = 0, blancos = 0;
+
+    state.preguntas.forEach((q, idx) => {
+        const uResp = state.respuestas[idx];
+        if (uResp === null || uResp === undefined) {
+            blancos++;
+        } else if (uResp === q.respuestaCorrecta) {
+            aciertos++;
+        } else {
+            errores++;
+            guardarPreguntaFallada(q, uResp);
+        }
+    });
+
+    const total = state.preguntas.length;
+    const puntuacionDirecta = Math.max(0, aciertos - (errores / 3));
+    const nota = total > 0 ? ((puntuacionDirecta / total) * 10).toFixed(2) : 0;
+
+    const registro = {
+        id: "ex-" + Date.now(),
+        fecha: new Date().toLocaleString("es-ES"),
+        tipo: state.modo,
+        totalPreguntas: total,
+        aciertos,
+        errores,
+        blancos,
+        puntuacionDirecta: puntuacionDirecta.toFixed(2),
+        nota: parseFloat(nota)
+    };
+
+    // Guardar en Historial
+    const historial = JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORIAL) || "[]");
+    historial.unshift(registro);
+    localStorage.setItem(STORAGE_KEYS.HISTORIAL, JSON.stringify(historial));
+
+    // Mostrar Pantalla de Resultados
+    document.getElementById("res-fecha").textContent = `Realizado el ${registro.fecha}`;
+    document.getElementById("res-score-value").textContent = nota;
+    document.getElementById("res-aciertos").textContent = aciertos;
+    document.getElementById("res-errores").textContent = errores;
+    document.getElementById("res-blancos").textContent = blancos;
+
+    navegarA("resultados");
+}
+
+function guardarPreguntaFallada(pregunta, respuestaUsuario) {
+    const falladas = JSON.parse(localStorage.getItem(STORAGE_KEYS.PREGUNTAS_FALLADAS) || "[]");
+    const index = falladas.findIndex(f => f.id === pregunta.id || f.enunciado === pregunta.enunciado);
+
+    if (index >= 0) {
+        falladas[index].fallosCount = (falladas[index].fallosCount || 1) + 1;
+        falladas[index].fecha = new Date().toLocaleDateString("es-ES");
+    } else {
+        falladas.push({
+            ...pregunta,
+            respuestaUsuario,
+            fallosCount: 1,
+            fecha: new Date().toLocaleDateString("es-ES")
+        });
+    }
+
+    localStorage.setItem(STORAGE_KEYS.PREGUNTAS_FALLADAS, JSON.stringify(falladas));
+}
+
+// ============================================================
+// 11. VISTAS SECUNDARIAS (FALLADAS, ESTADÍSTICAS, HISTORIAL)
+// ============================================================
+function renderizarPreguntasFalladas() {
+    const falladas = JSON.parse(localStorage.getItem(STORAGE_KEYS.PREGUNTAS_FALLADAS) || "[]");
+    const container = document.getElementById("falladas-list-container");
+    container.innerHTML = "";
+
+    if (falladas.length === 0) {
+        container.innerHTML = "<p class='text-muted'>No tienes preguntas falladas registradas. ¡Buen trabajo!</p>";
+        return;
+    }
+
+    falladas.forEach(f => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+            <div class="question-tags">
+                <span class="badge badge-bloque">${f.bloque || 'Bloque TAI'}</span>
+                <span class="badge badge-warning">Fallada ${f.fallosCount} veces</span>
+            </div>
+            <h4>${f.enunciado}</h4>
+            <p class="margin-top-small text-green"><strong>Correcta:</strong> ${f.opciones[f.respuestaCorrecta]}</p>
+            <p class="text-muted font-small margin-top-small">${f.explicacion}</p>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function renderizarEstadisticas() {
+    const historial = JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORIAL) || "[]");
+    if (historial.length === 0) return;
+
+    let totalTests = historial.length;
+    let totalPreguntas = 0, totalAciertos = 0;
+
+    historial.forEach(h => {
+        totalPreguntas += h.totalPreguntas;
+        totalAciertos += h.aciertos;
+    });
+
+    document.getElementById("st-total-tests").textContent = totalTests;
+    document.getElementById("st-total-preguntas").textContent = totalPreguntas;
+    document.getElementById("st-porcentaje-global").textContent = 
+        totalPreguntas > 0 ? `${((totalAciertos / totalPreguntas) * 100).toFixed(1)}%` : "0%";
+}
+
+function renderizarHistorial() {
+    const historial = JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORIAL) || "[]");
+    const tbody = document.getElementById("historial-table-body");
+    tbody.innerHTML = "";
+
+    if (historial.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='6' class='text-muted'>Sin historial registrado.</td></tr>";
+        return;
+    }
+
+    historial.forEach((item, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${item.fecha}</td>
+            <td><span class="badge">${item.tipo}</span></td>
+            <td>${item.totalPreguntas}</td>
+            <td><span class="text-green">${item.aciertos}</span> / <span class="text-red">${item.errores}</span> / ${item.blancos}</td>
+            <td><strong>${item.nota}</strong></td>
+            <td><button class="btn btn-danger btn-small" onclick="eliminarRegistroHistorial(${index})">🗑️</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function eliminarRegistroHistorial(index) {
+    const historial = JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORIAL) || "[]");
+    historial.splice(index, 1);
+    localStorage.setItem(STORAGE_KEYS.HISTORIAL, JSON.stringify(historial));
+    renderizarHistorial();
+}
+
+// ============================================================
+// 12. CONFIGURACIÓN Y MANEJO DE EVENTOS GENERALES
+// ============================================================
+function configurarEventosUI() {
+    // API Key Save / Delete
+    const apiInput = document.getElementById("api-key-input");
+    const savedKey = localStorage.getItem(STORAGE_KEYS.API_KEY);
+    if (savedKey) apiInput.value = savedKey;
+
+    document.getElementById("btn-save-api-key").addEventListener("click", () => {
+        const val = apiInput.value.trim();
+        if (val) {
+            localStorage.setItem(STORAGE_KEYS.API_KEY, val);
+            actualizarBadgeAPI();
+            alert("API Key guardada correctamente.");
+        }
+    });
+
+    document.getElementById("btn-delete-api-key").addEventListener("click", () => {
+        localStorage.removeItem(STORAGE_KEYS.API_KEY);
+        apiInput.value = "";
+        actualizarBadgeAPI();
+        alert("API Key eliminada.");
+    });
+
+    document.getElementById("btn-toggle-api-key").addEventListener("click", () => {
+        apiInput.type = apiInput.type === "password" ? "text" : "password";
+    });
+
+    // Iniciar Test Entrenamiento
+    document.getElementById("btn-iniciar-test").addEventListener("click", async () => {
+        const temasCbs = document.querySelectorAll(".cb-tema:checked");
+        if (temasCbs.length === 0) {
+            alert("Por favor, selecciona al menos un tema.");
+            return;
+        }
+
+        const numPreguntas = parseInt(document.getElementById("num-preguntas").value) || 10;
+        
+        // Recopilar información de temas
+        const temasSeleccionados = [];
+        temasCbs.forEach(cb => {
+            const bId = cb.getAttribute("data-bloque");
+            const tId = cb.getAttribute("data-tema");
+            const bloqueObj = TEMARIO.find(b => b.id === bId);
+            const temaObj = bloqueObj.temas.find(t => t.id === tId);
+            temasSeleccionados.push({
+                bloqueNombre: bloqueObj.nombre,
+                temaNumero: temaObj.numero,
+                temaNombre: temaObj.nombre,
+                contenido: temaObj.contenido
+            });
+        });
+
+        mostrarLoader(true, "Generando Preguntas", "Conectando con Gemini API...");
+        try {
+            const resData = await solicitarPreguntasGemini(temasSeleccionados, numPreguntas, false);
+            mostrarLoader(false);
+            if (resData.preguntas && resData.preguntas.length > 0) {
+                iniciarTestEntrenamiento(resData.preguntas);
+            } else {
+                alert("No se pudieron generar las preguntas.");
+            }
+        } catch (err) {
+            mostrarLoader(false);
+            alert("Error al generar test: " + err.message);
+        }
+    });
+
+    // Iniciar Simulacro Oficial
+    document.getElementById("btn-simulacro-oficial").addEventListener("click", async () => {
+        const supuestoBloqueVal = document.querySelector("input[name='supuesto-bloque']:checked").value;
+        const bloqueSupestoObj = TEMARIO.find(b => b.id === supuestoBloqueVal);
+
+        // Todo el temario para parte 1
+        const todosLosTemas = [];
+        TEMARIO.forEach(b => {
+            b.temas.forEach(t => {
+                todosLosTemas.push({
+                    bloqueNombre: b.nombre,
+                    temaNumero: t.numero,
+                    temaNombre: t.nombre,
+                    contenido: t.contenido
+                });
+            });
+        });
+
+        // Temas solo del bloque del supuesto para parte 2
+        const temasSupuesto = bloqueSupestoObj.temas.map(t => ({
+            bloqueNombre: bloqueSupestoObj.nombre,
+            temaNumero: t.numero,
+            temaNombre: t.nombre,
+            contenido: t.contenido
+        }));
+
+        mostrarLoader(true, "Generando Simulacro Oficial", "Esto puede tomar unos segundos...");
+        try {
+            const p1Data = await solicitarPreguntasGemini(todosLosTemas, 80, false);
+            const p2Data = await solicitarPreguntasGemini(temasSupuesto, 20, true, bloqueSupestoObj.nombre);
+            
+            mostrarLoader(false);
+            iniciarSimulacro(p1Data.preguntas, p2Data.preguntas, 120, p2Data.escenario);
+        } catch (err) {
+            mostrarLoader(false);
+            alert("Error al generar el simulacro: " + err.message);
+        }
+    });
+
+    // Preset buttons para preguntas
+    document.querySelectorAll(".preset-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".preset-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById("num-preguntas").value = btn.getAttribute("data-val");
+        });
+    });
+
+    // Exportación e Importación
+    document.getElementById("btn-export-data").addEventListener("click", exportarDatos);
+    document.getElementById("btn-trigger-import").addEventListener("click", () => document.getElementById("import-file-input").click());
+    document.getElementById("import-file-input").addEventListener("change", importarDatos);
+    document.getElementById("btn-borrar-historial").addEventListener("click", () => {
+        if (confirm("¿Estás seguro de que deseas borrar todo el historial?")) {
+            localStorage.removeItem(STORAGE_KEYS.HISTORIAL);
+            renderizarHistorial();
+        }
+    });
+}
+
+function mostrarLoader(visible, titulo = "", subtitulo = "") {
+    const overlay = document.getElementById("loading-overlay");
+    if (visible) {
+        document.getElementById("loading-title").textContent = titulo;
+        document.getElementById("loading-subtitle").textContent = subtitulo;
+        overlay.classList.remove("hidden");
+    } else {
+        overlay.classList.add("hidden");
+    }
+}
+
+function exportarDatos() {
+    const data = {
+        historial: JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORIAL) || "[]"),
+        falladas: JSON.parse(localStorage.getItem(STORAGE_KEYS.PREGUNTAS_FALLADAS) || "[]")
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `preparador_tai_backup_${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+}
+
+function importarDatos(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        try {
+            const parsed = JSON.parse(event.target.result);
+            if (confirm("Se van a reemplazar tus datos actuales. ¿Deseas continuar?")) {
+                if (parsed.historial) localStorage.setItem(STORAGE_KEYS.HISTORIAL, JSON.stringify(parsed.historial));
+                if (parsed.falladas) localStorage.setItem(STORAGE_KEYS.PREGUNTAS_FALLADAS, JSON.stringify(parsed.falladas));
+                alert("Datos importados con éxito.");
+                renderizarInicio();
+            }
+        } catch (err) {
+            alert("El archivo no contiene un JSON válido.");
+        }
+    };
+    reader.readAsText(file);
+}

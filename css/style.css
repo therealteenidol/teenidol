@@ -317,6 +317,91 @@
   z-index: 1;
 }
 
+.info-projects {
+  max-width: 1400px;
+  margin: 70px auto 0;
+  padding: 55px 20px 10px;
+  border-top: 1px solid rgba(0, 255, 0, 0.35);
+  position: relative;
+  z-index: 1;
+}
+
+.info-projects-heading {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.info-projects-heading h3 {
+  margin-bottom: 14px;
+  color: #00ff00;
+  font-family: 'Press Start 2P', 'Roboto Mono', monospace;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  line-height: 1.6;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+}
+
+.info-projects-heading p {
+  max-width: 760px;
+  margin: 0 auto;
+  color: #aaa;
+  line-height: 1.7;
+}
+
+.info-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 22px;
+}
+
+.info-project-card {
+  padding: 24px;
+  border: 1px solid rgba(0, 255, 0, 0.45);
+  border-left: 3px solid #00ff00;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.78);
+  box-shadow: 0 0 18px rgba(0, 255, 0, 0.08);
+}
+
+.info-project-card.is-schematic {
+  border-color: rgba(255, 208, 80, 0.55);
+  border-left-color: #ffd050;
+}
+
+.info-project-status {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 5px 8px;
+  border: 1px solid #777;
+  border-radius: 3px;
+  color: #ccc;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+}
+
+.info-project-category {
+  margin-bottom: 10px;
+  color: #00ff00;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.info-project-card.is-schematic .info-project-category {
+  color: #ffd050;
+}
+
+.info-project-card h4 {
+  margin-bottom: 12px;
+  color: #fff;
+  font-size: 1.15rem;
+}
+
+.info-project-card > p:last-child {
+  margin: 0;
+  color: #aaa;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
 .game-card {
   background: #000;
   border: 4px solid #00ff00;

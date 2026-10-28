@@ -540,7 +540,6 @@ function iniciarTestEntrenamiento(preguntas) {
     document.getElementById("test-mode-badge").textContent = "Modo Entrenamiento";
     document.getElementById("test-timer-container").classList.add("hidden");
     document.getElementById("scenario-card").classList.add("hidden");
-    document.getElementById("btn-dejar-blanco").classList.add("hidden");
 
     navegarA("ejecucion-test");
     renderizarPreguntaActual();
@@ -576,16 +575,18 @@ function renderizarPreguntaActual() {
     // Resetear Explicación y Botones
     document.getElementById("explanation-container").classList.add("hidden");
     document.getElementById("btn-siguiente-pregunta").classList.add("hidden");
+    document.getElementById("btn-dejar-blanco").classList.remove("hidden");
 
     // Verificar si ya fue respondida
     const respGuardada = state.respuestas[state.preguntaActualIndex];
-    if (respGuardada !== undefined) {
+    if (respGuardada !== undefined && respGuardada !== null) {
         aplicarEstadoRespuesta(respGuardada);
     }
 }
 
 function seleccionarRespuesta(indexOpcion) {
-    if (state.respuestas[state.preguntaActualIndex] !== undefined && state.modo === "entrenamiento") return;
+    const respuestaActual = state.respuestas[state.preguntaActualIndex];
+    if (respuestaActual !== undefined && respuestaActual !== null && state.modo === "entrenamiento") return;
 
     state.respuestas[state.preguntaActualIndex] = indexOpcion;
     const q = state.preguntas[state.preguntaActualIndex];
@@ -611,6 +612,7 @@ function seleccionarRespuesta(indexOpcion) {
 function aplicarEstadoRespuesta(indexOpcion) {
     const q = state.preguntas[state.preguntaActualIndex];
     const btns = document.querySelectorAll(".option-btn");
+    document.getElementById("btn-dejar-blanco").classList.add("hidden");
 
     btns.forEach((btn, idx) => {
         btn.disabled = true;
